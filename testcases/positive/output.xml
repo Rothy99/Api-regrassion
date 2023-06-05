@@ -1,0 +1,1534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.11.1 on win32)" generated="20230525 13:46:46.450" rpa="false" schemaversion="3">
+<suite id="s1" name="Oobotp Notification" source="D:\robot\MB Banking\MB Banking\testcases\oobotp_notification.robot">
+<test id="s1-t1" name="Check Push OTP notification" line="5">
+<kw name="Set Push OTP notification" library="oob_keyword">
+<kw name="Generate Random String" library="String">
+<var>${external_reference}</var>
+<arg>32</arg>
+<arg>[LETTERS][NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20230525 13:46:46.641" level="INFO">${external_reference} = cFSUxE2vOrR6Ll7RCm8EUhJf4mNSILHa</msg>
+<status status="PASS" starttime="20230525 13:46:46.641" endtime="20230525 13:46:46.641"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<arg>x-api-key=${x-api-key}</arg>
+<arg>client_id=${client_id}</arg>
+<arg>client_secret=${client_secret}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230525 13:46:46.641" level="INFO">${headers} = {'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret'}</msg>
+<status status="PASS" starttime="20230525 13:46:46.641" endtime="20230525 13:46:46.641"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${json}</var>
+<arg>{</arg>
+<arg>"service_id": "online_pay_otp",</arg>
+<arg>"batch_id": "0001",</arg>
+<arg>"body": [</arg>
+<arg>{</arg>
+<arg>"external_reference": "${external_reference}",</arg>
+<arg>"cif": "${cif}",</arg>
+<arg>"data": {</arg>
+<arg>"currency": "KHR",</arg>
+<arg>"amount": "50",</arg>
+<arg>"otp_code": "123456",</arg>
+<arg>"merchant_name": "Rothyyyyy Rothy yyyy Roth yyyyy",</arg>
+<arg>"card_mask": "1234 12** **59 1234"</arg>
+<arg>}</arg>
+<arg>}</arg>
+<arg>]</arg>
+<arg>}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 13:46:46.641" level="INFO">${json} = { "service_id": "online_pay_otp", "batch_id": "0001", "body": [ { "external_reference": "cFSUxE2vOrR6Ll7RCm8EUhJf4mNSILHa", "cif": "001088774", "data": { "currency": "KHR", "amount": "50", "otp_code":...</msg>
+<status status="PASS" starttime="20230525 13:46:46.641" endtime="20230525 13:46:46.641"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 13:46:46.641" level="INFO">{ "service_id": "online_pay_otp", "batch_id": "0001", "body": [ { "external_reference": "cFSUxE2vOrR6Ll7RCm8EUhJf4mNSILHa", "cif": "001088774", "data": { "currency": "KHR", "amount": "50", "otp_code": "123456", "merchant_name": "Rothyyyyy Rothy yyyy Roth yyyyy", "card_mask": "1234 12** **59 1234" } } ] }</msg>
+<status status="PASS" starttime="20230525 13:46:46.641" endtime="20230525 13:46:46.641"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>Pushnotification</arg>
+<arg>${baseurl}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230525 13:46:46.641" level="INFO">Creating Session using : alias=Pushnotification, url=http://api-uat-internal.hatthabank.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230525 13:46:46.641" endtime="20230525 13:46:46.641"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>Pushnotification</arg>
+<arg>${sendotp}</arg>
+<arg>data=${json}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230525 13:46:47.078" level="INFO">POST Request : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/information/ext-notification/send 
+ path_url=/notification-service/api/1.0/information/ext-notification/send 
+ headers={'User-Agent': 'python-requests/2.30.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret', 'Content-Length': '305'} 
+ body={ "service_id": "online_pay_otp", "batch_id": "0001", "body": [ { "external_reference": "cFSUxE2vOrR6Ll7RCm8EUhJf4mNSILHa", "cif": "001088774", "data": { "currency": "KHR", "amount": "50", "otp_code": "123456", "merchant_name": "Rothyyyyy Rothy yyyy Roth yyyyy", "card_mask": "1234 12** **59 1234" } } ] } 
+ </msg>
+<msg timestamp="20230525 13:46:47.078" level="INFO">POST Response : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/information/ext-notification/send 
+ status=200, reason=OK 
+ headers={'Date': 'Thu, 25 May 2023 06:46:47 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Xss-Protection': '1 ; mode=block', 'Strict-Transport-Security': 'max-age=3153600; includeSubDomains', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'", 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'master-only', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Access-Control-Max-Age': '3628800', 'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS, POST, PUT'} 
+ body={"code":"S0001","title":null,"message":"Success.","data":[{"content":"Your OTP is 123456 for payment of 50 KHR on Rothyyyyy Rothy yyyy Roth yyyyy. Please don't share it to anyone for security purposes.","status":"PROCESSING","cause":null,"cif":"001088774","account_number":null,"service_id":"online_pay_otp","batch_id":"0001","external_reference":"cFSUxE2vOrR6Ll7RCm8EUhJf4mNSILHa"}],"trace_id":"f3e76f85b732b588"} 
+ </msg>
+<msg timestamp="20230525 13:46:47.078" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230525 13:46:46.641" endtime="20230525 13:46:47.078"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 13:46:47.078" level="INFO">&lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230525 13:46:47.078" endtime="20230525 13:46:47.078"/>
+</kw>
+<kw name="Check body response OOB and OTP notification" library="Verify_success">
+<arg>${response.json()}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status_code}</var>
+<arg>${resp}</arg>
+<arg>$.code</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.094" level="INFO">${status_code} = ['S0001']</msg>
+<status status="PASS" starttime="20230525 13:46:47.078" endtime="20230525 13:46:47.094"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${smg}</var>
+<arg>${resp}</arg>
+<arg>$.message</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.109" level="INFO">${smg} = ['Success.']</msg>
+<status status="PASS" starttime="20230525 13:46:47.094" endtime="20230525 13:46:47.109"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status}</var>
+<arg>${resp}</arg>
+<arg>$.data.[0].status</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.118" level="INFO">${status} = ['PROCESSING']</msg>
+<status status="PASS" starttime="20230525 13:46:47.109" endtime="20230525 13:46:47.118"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${cause}</var>
+<arg>${resp}</arg>
+<arg>$.data.[*].cause</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.133" level="INFO">${cause} = [None]</msg>
+<status status="PASS" starttime="20230525 13:46:47.118" endtime="20230525 13:46:47.133"/>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:47.133" endtime="20230525 13:46:47.133"/>
+</kw>
+<msg timestamp="20230525 13:46:47.133" level="INFO">${response_status} = True</msg>
+<status status="PASS" starttime="20230525 13:46:47.133" endtime="20230525 13:46:47.133"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:47.133" endtime="20230525 13:46:47.133"/>
+</kw>
+<kw name="Set Test Message" library="BuiltIn">
+<arg>${cause[0]}</arg>
+<doc>Sets message for the current test case.</doc>
+<msg timestamp="20230525 13:46:47.133" level="INFO">Set test message to:
+None</msg>
+<status status="PASS" starttime="20230525 13:46:47.133" endtime="20230525 13:46:47.133"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:47.078" endtime="20230525 13:46:47.133"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:46.641" endtime="20230525 13:46:47.133"/>
+</kw>
+<tag>positive</tag>
+<status status="PASS" starttime="20230525 13:46:46.641" endtime="20230525 13:46:47.133">None</status>
+</test>
+<test id="s1-t2" name="Check Push OOB notification" line="8">
+<kw name="Set Push OOB notification" library="oob_keyword">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>Pushnotification</arg>
+<arg>${baseurl}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230525 13:46:47.133" level="INFO">Creating Session using : alias=Pushnotification, url=http://api-uat-internal.hatthabank.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230525 13:46:47.133" endtime="20230525 13:46:47.133"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${external_reference}</var>
+<arg>32</arg>
+<arg>[LETTERS][NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20230525 13:46:47.133" level="INFO">${external_reference} = GneOZgDhBt4Qn8Dod38zGb0WjbS62deA</msg>
+<status status="PASS" starttime="20230525 13:46:47.133" endtime="20230525 13:46:47.133"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<arg>x-api-key=${x-api-key}</arg>
+<arg>client_id=${client_id}</arg>
+<arg>client_secret=${client_secret}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230525 13:46:47.133" level="INFO">${headers} = {'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret'}</msg>
+<status status="PASS" starttime="20230525 13:46:47.133" endtime="20230525 13:46:47.133"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${json}</var>
+<arg>{</arg>
+<arg>"service_id": "online_pay_consent",</arg>
+<arg>"batch_id": "3238",</arg>
+<arg>"body": [</arg>
+<arg>{</arg>
+<arg>"external_reference": "${external_reference}",</arg>
+<arg>"cif": "${cif}",</arg>
+<arg>"data": {</arg>
+<arg>"currency": "USD",</arg>
+<arg>"amount": "50",</arg>
+<arg>"merchant_name": "Rothyyyyy Rothy yyyy Roth yyyyy",</arg>
+<arg>"card_mask": "1234 12** **59 1234"</arg>
+<arg>}</arg>
+<arg>}</arg>
+<arg>]</arg>
+<arg>}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 13:46:47.133" level="INFO">${json} = { "service_id": "online_pay_consent", "batch_id": "3238", "body": [ { "external_reference": "GneOZgDhBt4Qn8Dod38zGb0WjbS62deA", "cif": "001088774", "data": { "currency": "USD", "amount": "50", "mercha...</msg>
+<status status="PASS" starttime="20230525 13:46:47.133" endtime="20230525 13:46:47.133"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 13:46:47.133" level="INFO">{ "service_id": "online_pay_consent", "batch_id": "3238", "body": [ { "external_reference": "GneOZgDhBt4Qn8Dod38zGb0WjbS62deA", "cif": "001088774", "data": { "currency": "USD", "amount": "50", "merchant_name": "Rothyyyyy Rothy yyyy Roth yyyyy", "card_mask": "1234 12** **59 1234" } } ] }</msg>
+<status status="PASS" starttime="20230525 13:46:47.133" endtime="20230525 13:46:47.133"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>Pushnotification</arg>
+<arg>${sendoob}</arg>
+<arg>data=${json}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230525 13:46:47.337" level="INFO">POST Request : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/information/ext-notification/send 
+ path_url=/notification-service/api/1.0/information/ext-notification/send 
+ headers={'User-Agent': 'python-requests/2.30.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret', 'Content-Length': '287'} 
+ body={ "service_id": "online_pay_consent", "batch_id": "3238", "body": [ { "external_reference": "GneOZgDhBt4Qn8Dod38zGb0WjbS62deA", "cif": "001088774", "data": { "currency": "USD", "amount": "50", "merchant_name": "Rothyyyyy Rothy yyyy Roth yyyyy", "card_mask": "1234 12** **59 1234" } } ] } 
+ </msg>
+<msg timestamp="20230525 13:46:47.337" level="INFO">POST Response : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/information/ext-notification/send 
+ status=200, reason=OK 
+ headers={'Date': 'Thu, 25 May 2023 06:46:47 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Xss-Protection': '1 ; mode=block', 'Strict-Transport-Security': 'max-age=3153600; includeSubDomains', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'", 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'master-only', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Access-Control-Max-Age': '3628800', 'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS, POST, PUT'} 
+ body={"code":"S0001","title":null,"message":"Success.","data":[{"content":"You are paying amount 50 USD to Rothyyyyy Rothy yyyy Roth yyyyy with Visa Card  Tap confirm you are making this payment.","status":"PROCESSING","cause":null,"cif":"001088774","account_number":null,"service_id":"online_pay_consent","batch_id":"3238","external_reference":"GneOZgDhBt4Qn8Dod38zGb0WjbS62deA"}],"trace_id":"d88ee30be2c6b30c"} 
+ </msg>
+<msg timestamp="20230525 13:46:47.337" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230525 13:46:47.133" endtime="20230525 13:46:47.337"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 13:46:47.337" level="INFO">&lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230525 13:46:47.337" endtime="20230525 13:46:47.337"/>
+</kw>
+<kw name="Check body response OOB and OTP notification" library="Verify_success">
+<arg>${response.json()}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status_code}</var>
+<arg>${resp}</arg>
+<arg>$.code</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.352" level="INFO">${status_code} = ['S0001']</msg>
+<status status="PASS" starttime="20230525 13:46:47.337" endtime="20230525 13:46:47.352"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${smg}</var>
+<arg>${resp}</arg>
+<arg>$.message</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.352" level="INFO">${smg} = ['Success.']</msg>
+<status status="PASS" starttime="20230525 13:46:47.352" endtime="20230525 13:46:47.352"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status}</var>
+<arg>${resp}</arg>
+<arg>$.data.[0].status</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.369" level="INFO">${status} = ['PROCESSING']</msg>
+<status status="PASS" starttime="20230525 13:46:47.352" endtime="20230525 13:46:47.369"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${cause}</var>
+<arg>${resp}</arg>
+<arg>$.data.[*].cause</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.385" level="INFO">${cause} = [None]</msg>
+<status status="PASS" starttime="20230525 13:46:47.369" endtime="20230525 13:46:47.385"/>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:47.385" endtime="20230525 13:46:47.385"/>
+</kw>
+<msg timestamp="20230525 13:46:47.385" level="INFO">${response_status} = True</msg>
+<status status="PASS" starttime="20230525 13:46:47.385" endtime="20230525 13:46:47.385"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:47.385" endtime="20230525 13:46:47.385"/>
+</kw>
+<kw name="Set Test Message" library="BuiltIn">
+<arg>${cause[0]}</arg>
+<doc>Sets message for the current test case.</doc>
+<msg timestamp="20230525 13:46:47.385" level="INFO">Set test message to:
+None</msg>
+<status status="PASS" starttime="20230525 13:46:47.385" endtime="20230525 13:46:47.385"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:47.337" endtime="20230525 13:46:47.385"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${Get_external_referenc}</var>
+<arg>${response.json()}</arg>
+<arg>$.data.[0].external_reference</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.385" level="INFO">${Get_external_referenc} = ['GneOZgDhBt4Qn8Dod38zGb0WjbS62deA']</msg>
+<status status="PASS" starttime="20230525 13:46:47.385" endtime="20230525 13:46:47.385"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${Get_external_referenc}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 13:46:47.385" level="INFO">['GneOZgDhBt4Qn8Dod38zGb0WjbS62deA']</msg>
+<status status="PASS" starttime="20230525 13:46:47.385" endtime="20230525 13:46:47.385"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${Get_external_referenc}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20230525 13:46:47.385" level="INFO">${Get_external_referenc} = ['GneOZgDhBt4Qn8Dod38zGb0WjbS62deA']</msg>
+<status status="PASS" starttime="20230525 13:46:47.385" endtime="20230525 13:46:47.385"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:47.133" endtime="20230525 13:46:47.385"/>
+</kw>
+<tag>positive</tag>
+<status status="PASS" starttime="20230525 13:46:47.133" endtime="20230525 13:46:47.385">None</status>
+</test>
+<test id="s1-t3" name="Check Inquiry OOB notification by external reference" line="11">
+<kw name="Get OOB notification by external rerference" library="oob_keyword">
+<arg>${Get_external_referenc}</arg>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>inquiry_data</arg>
+<arg>${baseurl}</arg>
+<arg>verify=true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230525 13:46:47.400" level="INFO">Creating Session using : alias=inquiry_data, url=http://api-uat-internal.hatthabank.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20230525 13:46:47.400" endtime="20230525 13:46:47.400"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${header}</var>
+<arg>Content-Type=application/json</arg>
+<arg>x-api-key=${x-api-key}</arg>
+<arg>client_id=${client_id}</arg>
+<arg>client_secret=${client_secret}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230525 13:46:47.400" level="INFO">${header} = {'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret'}</msg>
+<status status="PASS" starttime="20230525 13:46:47.400" endtime="20230525 13:46:47.400"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${Response}</var>
+<arg>inquiry_data</arg>
+<arg>${inquiry_oob}/${external_key[0]}</arg>
+<arg>headers=${header}</arg>
+<arg>expected_status=anything</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20230525 13:46:47.616" level="INFO">GET Request : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/inquiry/GneOZgDhBt4Qn8Dod38zGb0WjbS62deA 
+ path_url=/notification-service/api/1.0/confirmation/oob/inquiry/GneOZgDhBt4Qn8Dod38zGb0WjbS62deA 
+ headers={'User-Agent': 'python-requests/2.30.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret'} 
+ body=None 
+ </msg>
+<msg timestamp="20230525 13:46:47.616" level="INFO">GET Response : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/inquiry/GneOZgDhBt4Qn8Dod38zGb0WjbS62deA 
+ status=200, reason=OK 
+ headers={'Date': 'Thu, 25 May 2023 06:46:47 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Xss-Protection': '1 ; mode=block', 'Strict-Transport-Security': 'max-age=3153600; includeSubDomains', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'", 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'master-only', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Access-Control-Max-Age': '3628800', 'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS, POST, PUT'} 
+ body={"code":"S0001","title":null,"message":"Success.","data":{"content":"You are paying amount 50 USD to Rothyyyyy Rothy yyyy Roth yyyyy with Visa Card  Tap confirm you are making this payment.","title":"Verify Payment on Rothyyyyy Rothy yyyy Roth yyyyy","icon":"https://api-uat.hatthabank.com:6443/hattha-service/api/1.0/file/VISA/type/LOGO","currency":"USD","amount":50.0,"expired_timer":119,"confirm_status":"INITIAL","merchant_name":"Rothyyyyy Rothy yyyy Roth yyyyy","card_mask":"1234 12** **59 1234"},"trace_id":"09e080123c667541"} 
+ </msg>
+<msg timestamp="20230525 13:46:47.616" level="INFO">${Response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230525 13:46:47.400" endtime="20230525 13:46:47.616"/>
+</kw>
+<kw name="Check OOB inquiry response body" library="Verify_success">
+<arg>${Response.json()}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status_code}</var>
+<arg>${resp}</arg>
+<arg>$.code</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.632" level="INFO">${status_code} = ['S0001']</msg>
+<status status="PASS" starttime="20230525 13:46:47.616" endtime="20230525 13:46:47.632"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${smg}</var>
+<arg>${resp}</arg>
+<arg>$.message</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.647" level="INFO">${smg} = ['Success.']</msg>
+<status status="PASS" starttime="20230525 13:46:47.632" endtime="20230525 13:46:47.647"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.647"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.647"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.647"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.647"/>
+</kw>
+<msg timestamp="20230525 13:46:47.647" level="INFO">${response_status} = True</msg>
+<status status="PASS" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.647"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.647"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.647"/>
+</branch>
+<status status="PASS" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.647"/>
+</if>
+<kw name="Set Test Message" library="BuiltIn">
+<arg>${smg[0]}</arg>
+<doc>Sets message for the current test case.</doc>
+<msg timestamp="20230525 13:46:47.647" level="INFO">Set test message to:
+Success.</msg>
+<status status="PASS" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.647"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:47.616" endtime="20230525 13:46:47.647"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:47.385" endtime="20230525 13:46:47.647"/>
+</kw>
+<tag>positive</tag>
+<status status="PASS" starttime="20230525 13:46:47.385" endtime="20230525 13:46:47.647">Success.</status>
+</test>
+<test id="s1-t4" name="Check Inquiry OOB notification has expired" line="14">
+<kw name="Get OOB notification has expired" library="oob_keyword">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>inquiry_data</arg>
+<arg>${baseurl}</arg>
+<arg>verify=true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230525 13:46:47.647" level="INFO">Creating Session using : alias=inquiry_data, url=http://api-uat-internal.hatthabank.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.647"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${header}</var>
+<arg>Content-Type=application/json</arg>
+<arg>x-api-key=${x-api-key}</arg>
+<arg>client_id=${client_id}</arg>
+<arg>client_secret=${client_secret}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230525 13:46:47.647" level="INFO">${header} = {'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret'}</msg>
+<status status="PASS" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.647"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${Response}</var>
+<arg>inquiry_data</arg>
+<arg>${inquiry_oob}/k67224d947ec4f8c963090f3b912cda2</arg>
+<arg>headers=${header}</arg>
+<arg>expected_status=anything</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20230525 13:46:47.782" level="INFO">GET Request : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/inquiry/k67224d947ec4f8c963090f3b912cda2 
+ path_url=/notification-service/api/1.0/confirmation/oob/inquiry/k67224d947ec4f8c963090f3b912cda2 
+ headers={'User-Agent': 'python-requests/2.30.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret'} 
+ body=None 
+ </msg>
+<msg timestamp="20230525 13:46:47.782" level="INFO">GET Response : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/inquiry/k67224d947ec4f8c963090f3b912cda2 
+ status=200, reason=OK 
+ headers={'Date': 'Thu, 25 May 2023 06:46:47 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Xss-Protection': '1 ; mode=block', 'Strict-Transport-Security': 'max-age=3153600; includeSubDomains', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'", 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'master-only', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Access-Control-Max-Age': '3628800', 'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS, POST, PUT'} 
+ body={"code":"S0001","title":null,"message":"Success.","data":{"content":"You are paying amount 50 USD to Rothyyyyy Rothy yyyy Roth yyyyy with Visa Card  Tap confirm you are making this payment.","title":"Verify Payment on Rothyyyyy Rothy yyyy Roth yyyyy","icon":"https://api-uat.hatthabank.com:6443/hattha-service/api/1.0/file/VISA/type/LOGO","currency":"USD","amount":50.0,"expired_timer":0,"confirm_status":"EXPIRED","merchant_name":"Rothyyyyy Rothy yyyy Roth yyyyy","card_mask":"1234 12** **59 1234"},"trace_id":"1252e405b8f81dcb"} 
+ </msg>
+<msg timestamp="20230525 13:46:47.782" level="INFO">${Response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.782"/>
+</kw>
+<kw name="Check OOB inquiry response body" library="Verify_success">
+<arg>${Response.json()}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status_code}</var>
+<arg>${resp}</arg>
+<arg>$.code</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.798" level="INFO">${status_code} = ['S0001']</msg>
+<status status="PASS" starttime="20230525 13:46:47.782" endtime="20230525 13:46:47.798"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${smg}</var>
+<arg>${resp}</arg>
+<arg>$.message</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.814" level="INFO">${smg} = ['Success.']</msg>
+<status status="PASS" starttime="20230525 13:46:47.798" endtime="20230525 13:46:47.814"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.814"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.814"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.814"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.814"/>
+</kw>
+<msg timestamp="20230525 13:46:47.814" level="INFO">${response_status} = True</msg>
+<status status="PASS" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.814"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.814"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.814"/>
+</branch>
+<status status="PASS" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.814"/>
+</if>
+<kw name="Set Test Message" library="BuiltIn">
+<arg>${smg[0]}</arg>
+<doc>Sets message for the current test case.</doc>
+<msg timestamp="20230525 13:46:47.814" level="INFO">Set test message to:
+Success.</msg>
+<status status="PASS" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.814"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:47.782" endtime="20230525 13:46:47.814"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.814"/>
+</kw>
+<tag>positive</tag>
+<status status="PASS" starttime="20230525 13:46:47.647" endtime="20230525 13:46:47.814">Success.</status>
+</test>
+<test id="s1-t5" name="Check Inquiry OOB nofication has failed" line="17">
+<kw name="Get OOB notification has failed" library="oob_keyword">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>inquiry_data</arg>
+<arg>${baseurl}</arg>
+<arg>verify=true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230525 13:46:47.814" level="INFO">Creating Session using : alias=inquiry_data, url=http://api-uat-internal.hatthabank.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.814"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${header}</var>
+<arg>Content-Type=application/json</arg>
+<arg>x-api-key=${x-api-key}</arg>
+<arg>client_id=${client_id}</arg>
+<arg>client_secret=${client_secret}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230525 13:46:47.814" level="INFO">${header} = {'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret'}</msg>
+<status status="PASS" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.814"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${Response}</var>
+<arg>inquiry_data</arg>
+<arg>${inquiry_oob}/k67224d947ec4f8c963090f3b912cda8</arg>
+<arg>headers=${header}</arg>
+<arg>expected_status=anything</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20230525 13:46:47.953" level="INFO">GET Request : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/inquiry/k67224d947ec4f8c963090f3b912cda8 
+ path_url=/notification-service/api/1.0/confirmation/oob/inquiry/k67224d947ec4f8c963090f3b912cda8 
+ headers={'User-Agent': 'python-requests/2.30.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret'} 
+ body=None 
+ </msg>
+<msg timestamp="20230525 13:46:47.953" level="INFO">GET Response : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/inquiry/k67224d947ec4f8c963090f3b912cda8 
+ status=200, reason=OK 
+ headers={'Date': 'Thu, 25 May 2023 06:46:47 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Xss-Protection': '1 ; mode=block', 'Strict-Transport-Security': 'max-age=3153600; includeSubDomains', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'", 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'master-only', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Access-Control-Max-Age': '3628800', 'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS, POST, PUT'} 
+ body={"code":"S0001","title":null,"message":"Success.","data":{"content":"You are paying amount 50 USD to Rothyyyyy Rothy yyyy Roth yyyyy with Visa Card  Tap confirm you are making this payment.","title":"Verify Payment on Rothyyyyy Rothy yyyy Roth yyyyy","icon":"https://api-uat.hatthabank.com:6443/hattha-service/api/1.0/file/VISA/type/LOGO","currency":"USD","amount":50.0,"expired_timer":0,"confirm_status":"FAILED","merchant_name":"Rothyyyyy Rothy yyyy Roth yyyyy","card_mask":"1234 12** **59 1234"},"trace_id":"f897650b0fa791da"} 
+ </msg>
+<msg timestamp="20230525 13:46:47.953" level="INFO">${Response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.953"/>
+</kw>
+<kw name="Check OOB inquiry response body" library="Verify_success">
+<arg>${Response.json()}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status_code}</var>
+<arg>${resp}</arg>
+<arg>$.code</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.969" level="INFO">${status_code} = ['S0001']</msg>
+<status status="PASS" starttime="20230525 13:46:47.953" endtime="20230525 13:46:47.969"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${smg}</var>
+<arg>${resp}</arg>
+<arg>$.message</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:47.984" level="INFO">${smg} = ['Success.']</msg>
+<status status="PASS" starttime="20230525 13:46:47.969" endtime="20230525 13:46:47.984"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:47.984" endtime="20230525 13:46:47.984"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:47.984" endtime="20230525 13:46:47.984"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:47.984" endtime="20230525 13:46:47.984"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:47.984" endtime="20230525 13:46:47.984"/>
+</kw>
+<msg timestamp="20230525 13:46:47.984" level="INFO">${response_status} = True</msg>
+<status status="PASS" starttime="20230525 13:46:47.984" endtime="20230525 13:46:47.984"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:47.984" endtime="20230525 13:46:47.984"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:47.984" endtime="20230525 13:46:47.984"/>
+</branch>
+<status status="PASS" starttime="20230525 13:46:47.984" endtime="20230525 13:46:47.984"/>
+</if>
+<kw name="Set Test Message" library="BuiltIn">
+<arg>${smg[0]}</arg>
+<doc>Sets message for the current test case.</doc>
+<msg timestamp="20230525 13:46:47.984" level="INFO">Set test message to:
+Success.</msg>
+<status status="PASS" starttime="20230525 13:46:47.984" endtime="20230525 13:46:47.984"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:47.953" endtime="20230525 13:46:47.984"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.984"/>
+</kw>
+<tag>positive</tag>
+<status status="PASS" starttime="20230525 13:46:47.814" endtime="20230525 13:46:47.984">Success.</status>
+</test>
+<test id="s1-t6" name="Check approve OOB notification" line="20">
+<kw name="Approve OOB notification" library="oob_keyword">
+<arg>${Get_external_referenc}</arg>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>oob_approve</arg>
+<arg>${baseurl}</arg>
+<arg>verify=true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230525 13:46:47.984" level="INFO">Creating Session using : alias=oob_approve, url=http://api-uat-internal.hatthabank.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20230525 13:46:47.984" endtime="20230525 13:46:47.984"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${header}</var>
+<arg>Content-Type=application/json</arg>
+<arg>x-api-key=${x-api-key}</arg>
+<arg>client_id=${client_id}</arg>
+<arg>client_secret=${client_secret}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230525 13:46:47.984" level="INFO">${header} = {'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret'}</msg>
+<status status="PASS" starttime="20230525 13:46:47.984" endtime="20230525 13:46:47.984"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${json}</var>
+<arg>{</arg>
+<arg>"ext_ref": "${external_key[0]}"</arg>
+<arg>}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 13:46:47.984" level="INFO">${json} = { "ext_ref": "GneOZgDhBt4Qn8Dod38zGb0WjbS62deA" }</msg>
+<status status="PASS" starttime="20230525 13:46:47.984" endtime="20230525 13:46:47.984"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${Response}</var>
+<arg>oob_approve</arg>
+<arg>${approve_oob}</arg>
+<arg>data=${json}</arg>
+<arg>headers=${header}</arg>
+<arg>expected_status=anything</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230525 13:46:48.544" level="INFO">POST Request : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/APPROVED 
+ path_url=/notification-service/api/1.0/confirmation/oob/APPROVED 
+ headers={'User-Agent': 'python-requests/2.30.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret', 'Content-Length': '49'} 
+ body={ "ext_ref": "GneOZgDhBt4Qn8Dod38zGb0WjbS62deA" } 
+ </msg>
+<msg timestamp="20230525 13:46:48.544" level="INFO">POST Response : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/APPROVED 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Thu, 25 May 2023 06:46:48 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Xss-Protection': '1 ; mode=block', 'Strict-Transport-Security': 'max-age=3153600; includeSubDomains', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'", 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'master-only', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Access-Control-Max-Age': '3628800', 'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS, POST, PUT'} 
+ body={"code":"ECFM-004","title":null,"message":"Confirmation Failed!","data":null,"trace_id":"85243ab880d412e9"} 
+ </msg>
+<msg timestamp="20230525 13:46:48.544" level="INFO">${Response} = &lt;Response [400]&gt;</msg>
+<status status="PASS" starttime="20230525 13:46:47.984" endtime="20230525 13:46:48.544"/>
+</kw>
+<kw name="Check body approve or reject OOB notification" library="Verify_success">
+<arg>${Response.json()}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status_code}</var>
+<arg>${resp}</arg>
+<arg>$.code</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:48.560" level="INFO">${status_code} = ['ECFM-004']</msg>
+<status status="PASS" starttime="20230525 13:46:48.544" endtime="20230525 13:46:48.560"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${smg}</var>
+<arg>${resp}</arg>
+<arg>$.message</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:48.575" level="INFO">${smg} = ['Confirmation Failed!']</msg>
+<status status="PASS" starttime="20230525 13:46:48.560" endtime="20230525 13:46:48.575"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-004&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-004</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-004</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<msg timestamp="20230525 13:46:48.575" level="INFO">${response_status} = True</msg>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-004</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-002&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-002</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-002</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</branch>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</if>
+<kw name="Set Test Message" library="BuiltIn">
+<arg>${smg[0]}</arg>
+<doc>Sets message for the current test case.</doc>
+<msg timestamp="20230525 13:46:48.575" level="INFO">Set test message to:
+Confirmation Failed!</msg>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:48.544" endtime="20230525 13:46:48.575"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:47.984" endtime="20230525 13:46:48.575"/>
+</kw>
+<tag>positive</tag>
+<status status="PASS" starttime="20230525 13:46:47.984" endtime="20230525 13:46:48.575">Confirmation Failed!</status>
+</test>
+<test id="s1-t7" name="Check reject OOB notification" line="23">
+<kw name="Reject OOB notification" library="oob_keyword">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>Pushnotification</arg>
+<arg>${baseurl}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230525 13:46:48.575" level="INFO">Creating Session using : alias=Pushnotification, url=http://api-uat-internal.hatthabank.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${external_reference}</var>
+<arg>32</arg>
+<arg>[LETTERS][NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20230525 13:46:48.575" level="INFO">${external_reference} = IB7AaP5DwXNPpehITPlBUYObIzFkzNFF</msg>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<arg>x-api-key=${x-api-key}</arg>
+<arg>client_id=${client_id}</arg>
+<arg>client_secret=${client_secret}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230525 13:46:48.575" level="INFO">${headers} = {'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret'}</msg>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${json}</var>
+<arg>{</arg>
+<arg>"service_id": "online_pay_consent",</arg>
+<arg>"batch_id": "3238",</arg>
+<arg>"body": [</arg>
+<arg>{</arg>
+<arg>"external_reference": "${external_reference}",</arg>
+<arg>"cif": "${cif}",</arg>
+<arg>"data": {</arg>
+<arg>"currency": "USD",</arg>
+<arg>"amount": "50",</arg>
+<arg>"merchant_name": "Rothyyyyy Rothy yyyy Roth yyyyy",</arg>
+<arg>"card_mask": "1234 12** **59 1234"</arg>
+<arg>}</arg>
+<arg>}</arg>
+<arg>]</arg>
+<arg>}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 13:46:48.575" level="INFO">${json} = { "service_id": "online_pay_consent", "batch_id": "3238", "body": [ { "external_reference": "IB7AaP5DwXNPpehITPlBUYObIzFkzNFF", "cif": "001088774", "data": { "currency": "USD", "amount": "50", "mercha...</msg>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 13:46:48.575" level="INFO">{ "service_id": "online_pay_consent", "batch_id": "3238", "body": [ { "external_reference": "IB7AaP5DwXNPpehITPlBUYObIzFkzNFF", "cif": "001088774", "data": { "currency": "USD", "amount": "50", "merchant_name": "Rothyyyyy Rothy yyyy Roth yyyyy", "card_mask": "1234 12** **59 1234" } } ] }</msg>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.575"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>Pushnotification</arg>
+<arg>${sendoob}</arg>
+<arg>data=${json}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230525 13:46:48.700" level="INFO">POST Request : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/information/ext-notification/send 
+ path_url=/notification-service/api/1.0/information/ext-notification/send 
+ headers={'User-Agent': 'python-requests/2.30.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret', 'Content-Length': '287'} 
+ body={ "service_id": "online_pay_consent", "batch_id": "3238", "body": [ { "external_reference": "IB7AaP5DwXNPpehITPlBUYObIzFkzNFF", "cif": "001088774", "data": { "currency": "USD", "amount": "50", "merchant_name": "Rothyyyyy Rothy yyyy Roth yyyyy", "card_mask": "1234 12** **59 1234" } } ] } 
+ </msg>
+<msg timestamp="20230525 13:46:48.700" level="INFO">POST Response : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/information/ext-notification/send 
+ status=200, reason=OK 
+ headers={'Date': 'Thu, 25 May 2023 06:46:48 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Xss-Protection': '1 ; mode=block', 'Strict-Transport-Security': 'max-age=3153600; includeSubDomains', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'", 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'master-only', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Access-Control-Max-Age': '3628800', 'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS, POST, PUT'} 
+ body={"code":"S0001","title":null,"message":"Success.","data":[{"content":"You are paying amount 50 USD to Rothyyyyy Rothy yyyy Roth yyyyy with Visa Card  Tap confirm you are making this payment.","status":"PROCESSING","cause":null,"cif":"001088774","account_number":null,"service_id":"online_pay_consent","batch_id":"3238","external_reference":"IB7AaP5DwXNPpehITPlBUYObIzFkzNFF"}],"trace_id":"ccc1eb01547d5f1d"} 
+ </msg>
+<msg timestamp="20230525 13:46:48.700" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:48.700"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 13:46:48.700" level="INFO">&lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230525 13:46:48.700" endtime="20230525 13:46:48.700"/>
+</kw>
+<kw name="Check body response OOB and OTP notification" library="Verify_success">
+<arg>${response.json()}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status_code}</var>
+<arg>${resp}</arg>
+<arg>$.code</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:48.716" level="INFO">${status_code} = ['S0001']</msg>
+<status status="PASS" starttime="20230525 13:46:48.700" endtime="20230525 13:46:48.716"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${smg}</var>
+<arg>${resp}</arg>
+<arg>$.message</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:48.733" level="INFO">${smg} = ['Success.']</msg>
+<status status="PASS" starttime="20230525 13:46:48.716" endtime="20230525 13:46:48.733"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status}</var>
+<arg>${resp}</arg>
+<arg>$.data.[0].status</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:48.733" level="INFO">${status} = ['PROCESSING']</msg>
+<status status="PASS" starttime="20230525 13:46:48.733" endtime="20230525 13:46:48.733"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${cause}</var>
+<arg>${resp}</arg>
+<arg>$.data.[*].cause</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:48.749" level="INFO">${cause} = [None]</msg>
+<status status="PASS" starttime="20230525 13:46:48.733" endtime="20230525 13:46:48.749"/>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:48.749" endtime="20230525 13:46:48.749"/>
+</kw>
+<msg timestamp="20230525 13:46:48.749" level="INFO">${response_status} = True</msg>
+<status status="PASS" starttime="20230525 13:46:48.749" endtime="20230525 13:46:48.749"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:48.749" endtime="20230525 13:46:48.749"/>
+</kw>
+<kw name="Set Test Message" library="BuiltIn">
+<arg>${cause[0]}</arg>
+<doc>Sets message for the current test case.</doc>
+<msg timestamp="20230525 13:46:48.749" level="INFO">Set test message to:
+None</msg>
+<status status="PASS" starttime="20230525 13:46:48.749" endtime="20230525 13:46:48.749"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:48.700" endtime="20230525 13:46:48.749"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${Get_external_referenc}</var>
+<arg>${response.json()}</arg>
+<arg>$.data.[0].external_reference</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:48.764" level="INFO">${Get_external_referenc} = ['IB7AaP5DwXNPpehITPlBUYObIzFkzNFF']</msg>
+<status status="PASS" starttime="20230525 13:46:48.749" endtime="20230525 13:46:48.764"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${Get_external_referenc}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230525 13:46:48.764" level="INFO">['IB7AaP5DwXNPpehITPlBUYObIzFkzNFF']</msg>
+<status status="PASS" starttime="20230525 13:46:48.764" endtime="20230525 13:46:48.764"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${Get_external_referenc}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20230525 13:46:48.764" level="INFO">${Get_external_referenc} = ['IB7AaP5DwXNPpehITPlBUYObIzFkzNFF']</msg>
+<status status="PASS" starttime="20230525 13:46:48.764" endtime="20230525 13:46:48.764"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>oob_reject</arg>
+<arg>${baseurl}</arg>
+<arg>verify=true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230525 13:46:48.764" level="INFO">Creating Session using : alias=oob_reject, url=http://api-uat-internal.hatthabank.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20230525 13:46:48.764" endtime="20230525 13:46:48.764"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${jsonbody}</var>
+<arg>{</arg>
+<arg>"ext_ref": "${Get_external_referenc[0]}"</arg>
+<arg>}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 13:46:48.764" level="INFO">${jsonbody} = { "ext_ref": "IB7AaP5DwXNPpehITPlBUYObIzFkzNFF" }</msg>
+<status status="PASS" starttime="20230525 13:46:48.764" endtime="20230525 13:46:48.764"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${Response}</var>
+<arg>oob_reject</arg>
+<arg>${approve_oob}</arg>
+<arg>data=${jsonbody}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=anything</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230525 13:46:49.181" level="INFO">POST Request : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/APPROVED 
+ path_url=/notification-service/api/1.0/confirmation/oob/APPROVED 
+ headers={'User-Agent': 'python-requests/2.30.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret', 'Content-Length': '49'} 
+ body={ "ext_ref": "IB7AaP5DwXNPpehITPlBUYObIzFkzNFF" } 
+ </msg>
+<msg timestamp="20230525 13:46:49.181" level="INFO">POST Response : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/APPROVED 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Thu, 25 May 2023 06:46:49 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Xss-Protection': '1 ; mode=block', 'Strict-Transport-Security': 'max-age=3153600; includeSubDomains', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'", 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'master-only', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Access-Control-Max-Age': '3628800', 'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS, POST, PUT'} 
+ body={"code":"ECFM-004","title":null,"message":"Confirmation Failed!","data":null,"trace_id":"b235bbb850891383"} 
+ </msg>
+<msg timestamp="20230525 13:46:49.181" level="INFO">${Response} = &lt;Response [400]&gt;</msg>
+<status status="PASS" starttime="20230525 13:46:48.764" endtime="20230525 13:46:49.181"/>
+</kw>
+<kw name="Check body approve or reject OOB notification" library="Verify_success">
+<arg>${Response.json()}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status_code}</var>
+<arg>${resp}</arg>
+<arg>$.code</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:49.197" level="INFO">${status_code} = ['ECFM-004']</msg>
+<status status="PASS" starttime="20230525 13:46:49.197" endtime="20230525 13:46:49.197"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${smg}</var>
+<arg>${resp}</arg>
+<arg>$.message</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:49.212" level="INFO">${smg} = ['Confirmation Failed!']</msg>
+<status status="PASS" starttime="20230525 13:46:49.197" endtime="20230525 13:46:49.212"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-004&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-004</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-004</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</kw>
+<msg timestamp="20230525 13:46:49.212" level="INFO">${response_status} = True</msg>
+<status status="PASS" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-004</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-002&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-002</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-002</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</branch>
+<status status="PASS" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</if>
+<kw name="Set Test Message" library="BuiltIn">
+<arg>${smg[0]}</arg>
+<doc>Sets message for the current test case.</doc>
+<msg timestamp="20230525 13:46:49.212" level="INFO">Set test message to:
+Confirmation Failed!</msg>
+<status status="PASS" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:49.181" endtime="20230525 13:46:49.212"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:49.212"/>
+</kw>
+<tag>positive</tag>
+<status status="PASS" starttime="20230525 13:46:48.575" endtime="20230525 13:46:49.212">Confirmation Failed!</status>
+</test>
+<test id="s1-t8" name="Check reject expired OOB notification" line="26">
+<kw name="Reject expired OOB notification" library="oob_keyword">
+<arg>${Get_external_referenc}</arg>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>oob_reject</arg>
+<arg>${baseurl}</arg>
+<arg>verify=true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230525 13:46:49.212" level="INFO">Creating Session using : alias=oob_reject, url=http://api-uat-internal.hatthabank.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${header}</var>
+<arg>Content-Type=application/json</arg>
+<arg>x-api-key=${x-api-key}</arg>
+<arg>client_id=${client_id}</arg>
+<arg>client_secret=${client_secret}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230525 13:46:49.212" level="INFO">${header} = {'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret'}</msg>
+<status status="PASS" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${json}</var>
+<arg>{</arg>
+<arg>"ext_ref": "${external_key[0]}"</arg>
+<arg>}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 13:46:49.212" level="INFO">${json} = { "ext_ref": "IB7AaP5DwXNPpehITPlBUYObIzFkzNFF" }</msg>
+<status status="PASS" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.212"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${Response}</var>
+<arg>oob_reject</arg>
+<arg>${reject_oob}</arg>
+<arg>data=${json}</arg>
+<arg>headers=${header}</arg>
+<arg>expected_status=anything</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230525 13:46:49.337" level="INFO">POST Request : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/REJECTED 
+ path_url=/notification-service/api/1.0/confirmation/oob/REJECTED 
+ headers={'User-Agent': 'python-requests/2.30.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret', 'Content-Length': '49'} 
+ body={ "ext_ref": "IB7AaP5DwXNPpehITPlBUYObIzFkzNFF" } 
+ </msg>
+<msg timestamp="20230525 13:46:49.337" level="INFO">POST Response : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/REJECTED 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Thu, 25 May 2023 06:46:49 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Xss-Protection': '1 ; mode=block', 'Strict-Transport-Security': 'max-age=3153600; includeSubDomains', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'", 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'master-only', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Access-Control-Max-Age': '3628800', 'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS, POST, PUT'} 
+ body={"code":"ECFM-002","title":"Session Expired","message":"Your session was expired.","data":null,"trace_id":"d8cb6e676215ee11"} 
+ </msg>
+<msg timestamp="20230525 13:46:49.337" level="INFO">${Response} = &lt;Response [400]&gt;</msg>
+<status status="PASS" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.337"/>
+</kw>
+<kw name="Check body approve or reject OOB notification" library="Verify_success">
+<arg>${Response.json()}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status_code}</var>
+<arg>${resp}</arg>
+<arg>$.code</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:49.369" level="INFO">${status_code} = ['ECFM-002']</msg>
+<status status="PASS" starttime="20230525 13:46:49.337" endtime="20230525 13:46:49.369"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${smg}</var>
+<arg>${resp}</arg>
+<arg>$.message</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:49.369" level="INFO">${smg} = ['Your session was expired.']</msg>
+<status status="PASS" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-004&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-004</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-004</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-002&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-002</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-002</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</kw>
+<msg timestamp="20230525 13:46:49.369" level="INFO">${response_status} = True</msg>
+<status status="PASS" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-002</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</branch>
+<status status="PASS" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</if>
+<kw name="Set Test Message" library="BuiltIn">
+<arg>${smg[0]}</arg>
+<doc>Sets message for the current test case.</doc>
+<msg timestamp="20230525 13:46:49.369" level="INFO">Set test message to:
+Your session was expired.</msg>
+<status status="PASS" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.369"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:49.337" endtime="20230525 13:46:49.369"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.369"/>
+</kw>
+<tag>positive</tag>
+<status status="PASS" starttime="20230525 13:46:49.212" endtime="20230525 13:46:49.369">Your session was expired.</status>
+</test>
+<test id="s1-t9" name="Check approve expired OOB notification" line="29">
+<kw name="Approve expried OOB notification" library="oob_keyword">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>oob_reject</arg>
+<arg>${baseurl}</arg>
+<arg>verify=true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230525 13:46:49.384" level="INFO">Creating Session using : alias=oob_reject, url=http://api-uat-internal.hatthabank.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20230525 13:46:49.384" endtime="20230525 13:46:49.384"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${header}</var>
+<arg>Content-Type=application/json</arg>
+<arg>x-api-key=${x-api-key}</arg>
+<arg>client_id=${client_id}</arg>
+<arg>client_secret=${client_secret}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230525 13:46:49.384" level="INFO">${header} = {'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret'}</msg>
+<status status="PASS" starttime="20230525 13:46:49.384" endtime="20230525 13:46:49.384"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${json}</var>
+<arg>{</arg>
+<arg>"ext_ref": "k67224d947ec4f8c963090f3b912cda3"</arg>
+<arg>}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230525 13:46:49.384" level="INFO">${json} = { "ext_ref": "k67224d947ec4f8c963090f3b912cda3" }</msg>
+<status status="PASS" starttime="20230525 13:46:49.384" endtime="20230525 13:46:49.384"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${Response}</var>
+<arg>oob_reject</arg>
+<arg>${reject_oob}</arg>
+<arg>data=${json}</arg>
+<arg>headers=${header}</arg>
+<arg>expected_status=anything</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230525 13:46:49.494" level="INFO">POST Request : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/REJECTED 
+ path_url=/notification-service/api/1.0/confirmation/oob/REJECTED 
+ headers={'User-Agent': 'python-requests/2.30.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret', 'Content-Length': '49'} 
+ body={ "ext_ref": "k67224d947ec4f8c963090f3b912cda3" } 
+ </msg>
+<msg timestamp="20230525 13:46:49.494" level="INFO">POST Response : url=http://api-uat-internal.hatthabank.com/notification-service/api/1.0/confirmation/oob/REJECTED 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Thu, 25 May 2023 06:46:49 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Xss-Protection': '1 ; mode=block', 'Strict-Transport-Security': 'max-age=3153600; includeSubDomains', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'", 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'master-only', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Access-Control-Max-Age': '3628800', 'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS, POST, PUT'} 
+ body={"code":"ECFM-002","title":"Session Expired","message":"Your session was expired.","data":null,"trace_id":"ef7368aa428a8e08"} 
+ </msg>
+<msg timestamp="20230525 13:46:49.494" level="INFO">${Response} = &lt;Response [400]&gt;</msg>
+<status status="PASS" starttime="20230525 13:46:49.384" endtime="20230525 13:46:49.494"/>
+</kw>
+<kw name="Check body approve or reject OOB notification" library="Verify_success">
+<arg>${Response.json()}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status_code}</var>
+<arg>${resp}</arg>
+<arg>$.code</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:49.509" level="INFO">${status_code} = ['ECFM-002']</msg>
+<status status="PASS" starttime="20230525 13:46:49.494" endtime="20230525 13:46:49.509"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${smg}</var>
+<arg>${resp}</arg>
+<arg>$.message</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230525 13:46:49.525" level="INFO">${smg} = ['Your session was expired.']</msg>
+<status status="PASS" starttime="20230525 13:46:49.509" endtime="20230525 13:46:49.525"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-004&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-004</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-004</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-002&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-002</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-002</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</kw>
+<msg timestamp="20230525 13:46:49.525" level="INFO">${response_status} = True</msg>
+<status status="PASS" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-002</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;ECFM-001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>ECFM-001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<arg>We has found something went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</kw>
+<status status="NOT RUN" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</branch>
+<status status="PASS" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</if>
+<kw name="Set Test Message" library="BuiltIn">
+<arg>${smg[0]}</arg>
+<doc>Sets message for the current test case.</doc>
+<msg timestamp="20230525 13:46:49.525" level="INFO">Set test message to:
+Your session was expired.</msg>
+<status status="PASS" starttime="20230525 13:46:49.525" endtime="20230525 13:46:49.525"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:49.494" endtime="20230525 13:46:49.525"/>
+</kw>
+<status status="PASS" starttime="20230525 13:46:49.384" endtime="20230525 13:46:49.525"/>
+</kw>
+<tag>positive</tag>
+<status status="PASS" starttime="20230525 13:46:49.369" endtime="20230525 13:46:49.525">Your session was expired.</status>
+</test>
+<status status="PASS" starttime="20230525 13:46:46.450" endtime="20230525 13:46:49.525"/>
+</suite>
+<statistics>
+<total>
+<stat pass="9" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="9" fail="0" skip="0">positive</stat>
+</tag>
+<suite>
+<stat pass="9" fail="0" skip="0" id="s1" name="Oobotp Notification">Oobotp Notification</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

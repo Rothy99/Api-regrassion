@@ -1,0 +1,923 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.11.2 on win32)" generated="20230530 16:33:42.600" rpa="false" schemaversion="3">
+<suite id="s1" name="Online Account Opening" source="d:\Automate\MB Banking done oob\MB Banking\testcases\online_account_opening.robot">
+<test id="s1-t1" name="Check verify KYC information correct" line="54">
+<kw name="verify phone number" library="online_account_opening_keyword">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>verify_session</arg>
+<arg>${baseurl}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230530 16:33:43.089" level="INFO">Creating Session using : alias=verify_session, url=http://api-uat-internal.hatthabank.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230530 16:33:43.088" endtime="20230530 16:33:43.093"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${phone_number}</var>
+<arg>9</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20230530 16:33:43.094" level="INFO">${phone_number} = 064846144</msg>
+<status status="PASS" starttime="20230530 16:33:43.094" endtime="20230530 16:33:43.095"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${phone_number}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230530 16:33:43.095" level="INFO">064846144</msg>
+<status status="PASS" starttime="20230530 16:33:43.095" endtime="20230530 16:33:43.096"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<arg>x-api-key=${x-api-key}</arg>
+<arg>client_id=${client_id}</arg>
+<arg>client_secret=${client_secret}</arg>
+<arg>device_id=${phone_number}</arg>
+<arg>app_version=${app_version}</arg>
+<arg>language=${language}</arg>
+<arg>client_req_timestamp=${client_req_timestamp}</arg>
+<arg>channel=CUSTOMER_MOBILE</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230530 16:33:43.097" level="INFO">${headers} = {'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret', 'device_id': '064846144', 'app_version': '3.1.0', 'language': 'en', 'client_re...</msg>
+<status status="PASS" starttime="20230530 16:33:43.096" endtime="20230530 16:33:43.097"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${Response}</var>
+<arg>verify_session</arg>
+<arg>${verify_phonenumber}${phone_number}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=anything</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20230530 16:33:44.077" level="INFO">GET Request : url=http://api-uat-internal.hatthabank.com/account-service/api/v1.0/account-opening?countryCode=855&amp;phoneNumber=064846144 
+ path_url=/account-service/api/v1.0/account-opening?countryCode=855&amp;phoneNumber=064846144 
+ headers={'User-Agent': 'python-requests/2.28.2', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret', 'device_id': '064846144', 'app_version': '3.1.0', 'language': 'en', 'client_req_timestamp': '1984191283000', 'channel': 'CUSTOMER_MOBILE'} 
+ body=None 
+ </msg>
+<msg timestamp="20230530 16:33:44.077" level="INFO">GET Response : url=http://api-uat-internal.hatthabank.com/account-service/api/v1.0/account-opening?countryCode=855&amp;phoneNumber=064846144 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 30 May 2023 09:33:44 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Xss-Protection': '1 ; mode=block', 'Strict-Transport-Security': 'max-age=3153600; includeSubDomains', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'", 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'master-only', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Access-Control-Max-Age': '3628800', 'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS, POST, PUT'} 
+ body={"code":"S0001","title":null,"message":"Success.","traceId":"e53df457932f9c35","data":{"cif":null,"verify_id":"eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODU0MzkyMjQsImV4cCI6MTY4NTQ0MDEyNCwic2VydmljZXMiOlsidXNlci1wcm9maWxlIiwiYWNjb3VudC1zZXJ2aWNlIl0sInJlcXVlc3RfaWQiOiJJOWFnNlBhZ0w4ZTBaYWIzIiwiZGV2aWNlX2lkIjoiMDY0ODQ2MTQ0In0.qoMxJukXjG1tMGJJBnwY8z_q8nhJ2jAoaZCEPvdnw3uqv6TpEOEi7HKvWQ0nMTUHamIo4Bonurp0KhP8qFmdzg","otp_type":"ACCOUNT_OPENING","exp_time_to_resend":60,"phone_number":"+855064***144"}} 
+ </msg>
+<msg timestamp="20230530 16:33:44.077" level="INFO">${Response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230530 16:33:43.097" endtime="20230530 16:33:44.077"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${Response}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230530 16:33:44.078" level="INFO">&lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230530 16:33:44.078" endtime="20230530 16:33:44.078"/>
+</kw>
+<kw name="check get response body for verify phone number" library="Verify_success">
+<arg>${Response.json()}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status_code}</var>
+<arg>${resp}</arg>
+<arg>$.code</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230530 16:33:44.100" level="INFO">${status_code} = ['S0001']</msg>
+<status status="PASS" starttime="20230530 16:33:44.079" endtime="20230530 16:33:44.100"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${smg}</var>
+<arg>${resp}</arg>
+<arg>$.message</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230530 16:33:44.119" level="INFO">${smg} = ['Success.']</msg>
+<status status="PASS" starttime="20230530 16:33:44.101" endtime="20230530 16:33:44.119"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${status_code[0]}&quot;==&quot;EAO-P001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>EAO-P001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.120" endtime="20230530 16:33:44.120"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>EAO-P001</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.121" endtime="20230530 16:33:44.121"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:44.119" endtime="20230530 16:33:44.121"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230530 16:33:44.122" endtime="20230530 16:33:44.123"/>
+</kw>
+<msg timestamp="20230530 16:33:44.123" level="INFO">${response_status} = True</msg>
+<status status="PASS" starttime="20230530 16:33:44.121" endtime="20230530 16:33:44.124"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230530 16:33:44.124" endtime="20230530 16:33:44.126"/>
+</kw>
+<status status="PASS" starttime="20230530 16:33:44.121" endtime="20230530 16:33:44.126"/>
+</branch>
+<status status="PASS" starttime="20230530 16:33:44.119" endtime="20230530 16:33:44.126"/>
+</if>
+<kw name="Set Test Message" library="BuiltIn">
+<arg>${smg[0]}</arg>
+<doc>Sets message for the current test case.</doc>
+<msg timestamp="20230530 16:33:44.127" level="INFO">Set test message to:
+Success.</msg>
+<status status="PASS" starttime="20230530 16:33:44.126" endtime="20230530 16:33:44.127"/>
+</kw>
+<status status="PASS" starttime="20230530 16:33:44.078" endtime="20230530 16:33:44.127"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${verify_id}</var>
+<arg>${Response.json()}</arg>
+<arg>$.data.verify_id</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230530 16:33:44.149" level="INFO">${verify_id} = ['eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODU0MzkyMjQsImV4cCI6MTY4NTQ0MDEyNCwic2VydmljZXMiOlsidXNlci1wcm9maWxlIiwiYWNjb3VudC1zZXJ2aWNlIl0sInJlcXVlc3RfaWQiOiJJOWFnNlBhZ0w4ZTBaYWIzIiwiZGV2aWNlX2lkIjoiMDY0ODQ2M...</msg>
+<status status="PASS" starttime="20230530 16:33:44.127" endtime="20230530 16:33:44.149"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${verify_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230530 16:33:44.149" level="INFO">['eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODU0MzkyMjQsImV4cCI6MTY4NTQ0MDEyNCwic2VydmljZXMiOlsidXNlci1wcm9maWxlIiwiYWNjb3VudC1zZXJ2aWNlIl0sInJlcXVlc3RfaWQiOiJJOWFnNlBhZ0w4ZTBaYWIzIiwiZGV2aWNlX2lkIjoiMDY0ODQ2MTQ0In0.qoMxJukXjG1tMGJJBnwY8z_q8nhJ2jAoaZCEPvdnw3uqv6TpEOEi7HKvWQ0nMTUHamIo4Bonurp0KhP8qFmdzg']</msg>
+<status status="PASS" starttime="20230530 16:33:44.149" endtime="20230530 16:33:44.149"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${verify_id}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20230530 16:33:44.150" level="INFO">${verify_id} = ['eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODU0MzkyMjQsImV4cCI6MTY4NTQ0MDEyNCwic2VydmljZXMiOlsidXNlci1wcm9maWxlIiwiYWNjb3VudC1zZXJ2aWNlIl0sInJlcXVlc3RfaWQiOiJJOWFnNlBhZ0w4ZTBaYWIzIiwiZGV2aWNlX2lkIjoiMDY0ODQ2M...</msg>
+<status status="PASS" starttime="20230530 16:33:44.150" endtime="20230530 16:33:44.150"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${phone_number}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20230530 16:33:44.151" level="INFO">${phone_number} = 064846144</msg>
+<status status="PASS" starttime="20230530 16:33:44.150" endtime="20230530 16:33:44.151"/>
+</kw>
+<status status="PASS" starttime="20230530 16:33:43.088" endtime="20230530 16:33:44.151"/>
+</kw>
+<kw name="Check verify OTP" library="online_account_opening_keyword">
+<arg>${verify_id}</arg>
+<arg>${phone_number}</arg>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>baseUrl</arg>
+<arg>${baseurl}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230530 16:33:44.153" level="INFO">Creating Session using : alias=baseUrl, url=http://api-uat-internal.hatthabank.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230530 16:33:44.153" endtime="20230530 16:33:44.153"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<arg>x-api-key=${x-api-key}</arg>
+<arg>client_id=${client_id}</arg>
+<arg>client_secret=${client_secret}</arg>
+<arg>device_id=${phone_number}</arg>
+<arg>app_version=${app_version}</arg>
+<arg>language=${language}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230530 16:33:44.155" level="INFO">${headers} = {'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret', 'device_id': '064846144', 'app_version': '3.1.0', 'language': 'en'}</msg>
+<status status="PASS" starttime="20230530 16:33:44.154" endtime="20230530 16:33:44.155"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${json}</var>
+<arg>{</arg>
+<arg>"verify_id": "${verify_id[0]}",</arg>
+<arg>"otp_type": "ACCOUNT_OPENING",</arg>
+<arg>"otp": "g9zs6r6sj7bwW5pxC7SMyAMh4VTNzA9FvhAt4qh6hQI38Nboi+o8itVD4jwupJtuCiIkje9GDfHCIJCl83DVIwpHEj6zd7N2y6X3mO2qOO2WrrnZhqeKL3uvrBOoV/4e1+NFQQH8Tr7XRzxT6pgXf6o/AY2Kqraas38j6xDf3efJ50/GFZea1py3rGPMuGdLvfamiCT5ZJenzgDkIxfAqFRgwZi3/jKX61jncAZMXr/SOTllKQBHGfiRWDBHBxvvWiW7ilHLusqF19r+QuFSA6Luc/lgzSrLFyAVXfVKERfVwDSh6FyMvjuzaqoPKT+tue1CaNxC42fbfNBtM/cDfXPuKqBLGGnY5ADUswIO9GyvMsrEzZar2i1sVQ1FsAExIhr8KA2suMPdq9KL5a1LxZHiBc5/UeBkfskIZ3g5QPrE4NnxShSkQiLNabJf828wJaC3BvWimMfutXso4aVUaLf0xq+jGplnqQujR9ZppR0GLgdrDOojEnVXJDFckbFVEXIyELBhjTSV3D6wuzqJ8DuCkyWN/7nRHCl/sVhsEMdas+NgCXuW5P2nv69RAWAvLeTCIJpfDnmYtDpE1sVOG5Br+KVum/F3rWazoW4XsHOMOaDKWyG1YRHX9Q3NmIal37hSvYxxv75TgJfrX7FFTYO+w9ojlKeSWq8uutqDTgU="</arg>
+<arg>}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230530 16:33:44.156" level="INFO">${json} = { "verify_id": "eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODU0MzkyMjQsImV4cCI6MTY4NTQ0MDEyNCwic2VydmljZXMiOlsidXNlci1wcm9maWxlIiwiYWNjb3VudC1zZXJ2aWNlIl0sInJlcXVlc3RfaWQiOiJJOWFnNlBhZ0w4ZTBaYWIzIiwiZGV2aWNlX2l...</msg>
+<status status="PASS" starttime="20230530 16:33:44.155" endtime="20230530 16:33:44.157"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${Response}</var>
+<arg>baseUrl</arg>
+<arg>${otp_online_acc_opening}</arg>
+<arg>data=${json}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230530 16:33:44.308" level="INFO">POST Request : url=http://api-uat-internal.hatthabank.com/user-profile/api/v1.0/otp/users/validate 
+ path_url=/user-profile/api/v1.0/otp/users/validate 
+ headers={'User-Agent': 'python-requests/2.28.2', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret', 'device_id': '064846144', 'app_version': '3.1.0', 'language': 'en', 'Content-Length': '1036'} 
+ body={ "verify_id": "eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODU0MzkyMjQsImV4cCI6MTY4NTQ0MDEyNCwic2VydmljZXMiOlsidXNlci1wcm9maWxlIiwiYWNjb3VudC1zZXJ2aWNlIl0sInJlcXVlc3RfaWQiOiJJOWFnNlBhZ0w4ZTBaYWIzIiwiZGV2aWNlX2lkIjoiMDY0ODQ2MTQ0In0.qoMxJukXjG1tMGJJBnwY8z_q8nhJ2jAoaZCEPvdnw3uqv6TpEOEi7HKvWQ0nMTUHamIo4Bonurp0KhP8qFmdzg", "otp_type": "ACCOUNT_OPENING", "otp": "g9zs6r6sj7bwW5pxC7SMyAMh4VTNzA9FvhAt4qh6hQI38Nboi+o8itVD4jwupJtuCiIkje9GDfHCIJCl83DVIwpHEj6zd7N2y6X3mO2qOO2WrrnZhqeKL3uvrBOoV/4e1+NFQQH8Tr7XRzxT6pgXf6o/AY2Kqraas38j6xDf3efJ50/GFZea1py3rGPMuGdLvfamiCT5ZJenzgDkIxfAqFRgwZi3/jKX61jncAZMXr/SOTllKQBHGfiRWDBHBxvvWiW7ilHLusqF19r+QuFSA6Luc/lgzSrLFyAVXfVKERfVwDSh6FyMvjuzaqoPKT+tue1CaNxC42fbfNBtM/cDfXPuKqBLGGnY5ADUswIO9GyvMsrEzZar2i1sVQ1FsAExIhr8KA2suMPdq9KL5a1LxZHiBc5/UeBkfskIZ3g5QPrE4NnxShSkQiLNabJf828wJaC3BvWimMfutXso4aVUaLf0xq+jGplnqQujR9ZppR0GLgdrDOojEnVXJDFckbFVEXIyELBhjTSV3D6wuzqJ8DuCkyWN/7nRHCl/sVhsEMdas+NgCXuW5P2nv69RAWAvLeTCIJpfDnmYtDpE1sVOG5Br+KVum/F3rWazoW4XsHOMOaDKWyG1YRHX9Q3NmIal37hSvYxxv75TgJfrX7FFTYO+w9ojlKeSWq8uutqDTgU=" } 
+ </msg>
+<msg timestamp="20230530 16:33:44.309" level="INFO">POST Response : url=http://api-uat-internal.hatthabank.com/user-profile/api/v1.0/otp/users/validate 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 30 May 2023 09:33:44 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Xss-Protection': '1 ; mode=block', 'Strict-Transport-Security': 'max-age=3153600; includeSubDomains', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'", 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'master-only', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Access-Control-Max-Age': '3628800', 'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS, POST, PUT'} 
+ body={"code":"S0001","title":null,"message":"Success.","trace_id":"23b3ca897c04125b","data":{"verify_id":"eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODU0MzkyMjQsImV4cCI6MTY4NTQ0MDEyNCwic2VydmljZXMiOlsidXNlci1wcm9maWxlIiwiYWNjb3VudC1zZXJ2aWNlIl0sInZhbGlkYXRlZCI6dHJ1ZSwicmVxdWVzdF9pZCI6Ikk5YWc2UGFnTDhlMFphYjMiLCJkZXZpY2VfaWQiOiIwNjQ4NDYxNDQifQ.N2GpK5Q7yZNgZmUPxE5Tl1HCIME7OwKfwDK3EZeC0p0mhpdSGK7XKO886b4oAvb6WZfygHtsf7WxZ0DFfb0VOQ","otp_type":"ACCOUNT_OPENING","cif":null}} 
+ </msg>
+<msg timestamp="20230530 16:33:44.309" level="INFO">${Response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230530 16:33:44.158" endtime="20230530 16:33:44.309"/>
+</kw>
+<kw name="check get response body for verify OTP" library="Verify_success">
+<arg>${Response.json()}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status_code}</var>
+<arg>${resp}</arg>
+<arg>$.code</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230530 16:33:44.334" level="INFO">${status_code} = ['S0001']</msg>
+<status status="PASS" starttime="20230530 16:33:44.311" endtime="20230530 16:33:44.334"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${smg}</var>
+<arg>${resp}</arg>
+<arg>$.message</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230530 16:33:44.365" level="INFO">${smg} = ['Success.']</msg>
+<status status="PASS" starttime="20230530 16:33:44.335" endtime="20230530 16:33:44.365"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${status_code[0]}&quot;==&quot;UP-IN003&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>UP-IN003</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.367" endtime="20230530 16:33:44.367"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>UP-IN003</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.367" endtime="20230530 16:33:44.367"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:44.366" endtime="20230530 16:33:44.368"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;E0001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>E0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.369" endtime="20230530 16:33:44.369"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>E0001</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.370" endtime="20230530 16:33:44.370"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:44.368" endtime="20230530 16:33:44.370"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;EREQID-03&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>EREQID-03</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.371" endtime="20230530 16:33:44.372"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>EREQID-03</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.372" endtime="20230530 16:33:44.372"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:44.370" endtime="20230530 16:33:44.372"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;UP-EP001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>UP-EP001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.375" endtime="20230530 16:33:44.375"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>UP-EP001</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.375" endtime="20230530 16:33:44.375"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:44.373" endtime="20230530 16:33:44.375"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;EREQID-01&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>EREQID-01</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.376" endtime="20230530 16:33:44.376"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>EREQID-01</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.377" endtime="20230530 16:33:44.377"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:44.376" endtime="20230530 16:33:44.377"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;EREQID-02&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>EREQID-02</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.378" endtime="20230530 16:33:44.378"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>EREQID-02</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.378" endtime="20230530 16:33:44.378"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:44.377" endtime="20230530 16:33:44.378"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;EF0001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>EF0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.379" endtime="20230530 16:33:44.379"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>EF0001</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.379" endtime="20230530 16:33:44.379"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:44.378" endtime="20230530 16:33:44.380"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;HTTP400&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>HTTP400</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.380" endtime="20230530 16:33:44.380"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>HTTP400</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.381" endtime="20230530 16:33:44.381"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:44.380" endtime="20230530 16:33:44.381"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;EREQID-05&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>EREQID-05</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.382" endtime="20230530 16:33:44.382"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>EREQID-05</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:44.383" endtime="20230530 16:33:44.383"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:44.381" endtime="20230530 16:33:44.383"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230530 16:33:44.384" endtime="20230530 16:33:44.386"/>
+</kw>
+<msg timestamp="20230530 16:33:44.386" level="INFO">${response_status} = True</msg>
+<status status="PASS" starttime="20230530 16:33:44.383" endtime="20230530 16:33:44.386"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230530 16:33:44.387" endtime="20230530 16:33:44.388"/>
+</kw>
+<status status="PASS" starttime="20230530 16:33:44.383" endtime="20230530 16:33:44.388"/>
+</branch>
+<status status="PASS" starttime="20230530 16:33:44.366" endtime="20230530 16:33:44.388"/>
+</if>
+<kw name="Set Test Message" library="BuiltIn">
+<arg>${smg[0]}</arg>
+<doc>Sets message for the current test case.</doc>
+<msg timestamp="20230530 16:33:44.390" level="INFO">Set test message to:
+Success.</msg>
+<status status="PASS" starttime="20230530 16:33:44.388" endtime="20230530 16:33:44.390"/>
+</kw>
+<status status="PASS" starttime="20230530 16:33:44.310" endtime="20230530 16:33:44.391"/>
+</kw>
+<status status="PASS" starttime="20230530 16:33:44.152" endtime="20230530 16:33:44.392"/>
+</kw>
+<kw name="Check verify KYC" library="online_account_opening_keyword">
+<arg>${verify_id}</arg>
+<arg>${phone_number}</arg>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>baseUrl</arg>
+<arg>${baseurl}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230530 16:33:44.394" level="INFO">Creating Session using : alias=baseUrl, url=http://api-uat-internal.hatthabank.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230530 16:33:44.393" endtime="20230530 16:33:44.394"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>x-api-key=${x-api-key}</arg>
+<arg>client_id=${client_id}</arg>
+<arg>client_secret=${client_secret}</arg>
+<arg>device_id=${phone_number}</arg>
+<arg>app_version=${app_version}</arg>
+<arg>language=${language}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230530 16:33:44.395" level="INFO">${headers} = {'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret', 'device_id': '064846144', 'app_version': '3.1.0', 'language': 'en'}</msg>
+<status status="PASS" starttime="20230530 16:33:44.394" endtime="20230530 16:33:44.395"/>
+</kw>
+<kw name="Get File For Streaming Upload" library="RequestsLibrary">
+<var>${nid}</var>
+<arg>${nid_image}</arg>
+<doc>Opens and returns a file descriptor of a specified file to be passed as ``data`` parameter
+to other requests keywords.</doc>
+<msg timestamp="20230530 16:33:44.396" level="INFO">${nid} = &lt;_io.BufferedReader name='resources/resource/nid.jpg'&gt;</msg>
+<status status="PASS" starttime="20230530 16:33:44.396" endtime="20230530 16:33:44.397"/>
+</kw>
+<kw name="Get File For Streaming Upload" library="RequestsLibrary">
+<var>${userimg}</var>
+<arg>${user_image}</arg>
+<doc>Opens and returns a file descriptor of a specified file to be passed as ``data`` parameter
+to other requests keywords.</doc>
+<msg timestamp="20230530 16:33:44.397" level="INFO">${userimg} = &lt;_io.BufferedReader name='resources/resource/userimg.jpg'&gt;</msg>
+<status status="PASS" starttime="20230530 16:33:44.397" endtime="20230530 16:33:44.397"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{json}</var>
+<arg>verify_id=${verify_id[0]}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230530 16:33:44.399" level="INFO">&amp;{json} = { verify_id=eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODU0MzkyMjQsImV4cCI6MTY4NTQ0MDEyNCwic2VydmljZXMiOlsidXNlci1wcm9maWxlIiwiYWNjb3VudC1zZXJ2aWNlIl0sInJlcXVlc3RfaWQiOiJJOWFnNlBhZ0w4ZTBaYWIzIiwiZGV2aWNlX2lkIjo...</msg>
+<status status="PASS" starttime="20230530 16:33:44.398" endtime="20230530 16:33:44.399"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{files}</var>
+<arg>national_id_card_photo=${nid}</arg>
+<arg>customer_photo=${userimg}</arg>
+<arg>operator_format=false</arg>
+<arg>Content-Type=multipart/form-data</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230530 16:33:44.400" level="INFO">&amp;{files} = { national_id_card_photo=&lt;_io.BufferedReader name='resources/resource/nid.jpg'&gt; | customer_photo=&lt;_io.BufferedReader name='resources/resource/userimg.jpg'&gt; | operator_format=false | Content-Type=multi...</msg>
+<status status="PASS" starttime="20230530 16:33:44.400" endtime="20230530 16:33:44.400"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${Response}</var>
+<arg>baseUrl</arg>
+<arg>${check_kyc}</arg>
+<arg>data=${json}</arg>
+<arg>files=&amp;{files}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230530 16:33:51.270" level="INFO">POST Request : url=http://api-uat-internal.hatthabank.com/account-service/api/v1.0/account-opening/kyc/check 
+ path_url=/account-service/api/v1.0/account-opening/kyc/check 
+ headers={'User-Agent': 'python-requests/2.28.2', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'x-api-key': '12345_api_key', 'client_id': '12345', 'client_secret': '12345_secret', 'device_id': '064846144', 'app_version': '3.1.0', 'language': 'en', 'Content-Length': '206955', 'Content-Type': 'multipart/form-data; boundary=fc1aa576d05363f838e4663272d9a050'} 
+ body=b'--fc1aa576d05363f838e4663272d9a050\r\nContent-Disposition: form-data; name="verify_id"\r\n\r\neyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODU0MzkyMjQsImV4cCI6MTY4NTQ0MDEyNCwic2VydmljZXMiOlsidXNlci1wcm9maWxlIiwiYWNjb3VudC1zZXJ2aWNlIl0sInJlcXVlc3RfaWQiOiJJOWFnNlBhZ0w4ZTBaYWIzIiwiZGV2aWNlX2lkIjoiMDY0ODQ2MTQ0In0.qoMxJukXjG1tMGJJBnwY8z_q8nhJ2jAoaZCEPvdnw3uqv6TpEOEi7HKvWQ0nMTUHamIo4Bonurp0KhP8qFmdzg\r\n--fc1aa576d05363f838e4663272d9a050\r\nContent-Disposition: form-data; name="national_id_card_photo"; filename="nid.jpg"\r\n\r\n\xff\xd8\xff\xe0\x00\x10JFIF\x00\x01\x01\x01\x00`\x00`\x00\x00\xff\xe2\x01\xdbICC_PROFILE\x00\x01\x01\x00\x00\x01\xcb\x00\x00\x00\x00\x02@\x00\x00mntrRGB XYZ \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00acsp\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\xf6\xd6\x00\x01\x00\x00\x00\x00\xd3-Qt\x05\x0f\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\trXYZ\x00\x00\x00\xf0\x00\x00\x00\x14gXYZ\x00\x00\x01\x04\x00\x00\x00\x14bXYZ\x00\x00\x01\x18\x00\x00\x00\x14wtpt\x00\x00\x01,\x00\x00\x00\x14cprt\x00\x00\x01@\x00\x00\x00\x0crTRC\x00\x00\x01L\x00\x00\x00 gTRC\x00\x00\x01L\x00\x00\x00 bTRC\x00\x00\x01L\x00\x00\x00 desc\x00\x00\x01l\x00\x00\x00_XYZ \x00\x00\x00\x00\x00\x00o\x9f\x00\x008\xf4\x00\x00\x03\x91XYZ \x00\x00\x00\x00\x00\x00b\x96\x00\x00\xb7\x87\x00\x00\x18\xdcXYZ \x00\x00\x00\x00\x00\x00$\xa1\x00\x00\x0f\x85\x00\x00\xb6\xd3XYZ \x00\x00\x00\x00\x00\x00\xf3O\x00\x01\x00\x00\x00\x01\x16\xc2text\x00\x00\x00\x00N/A\x00para\x00\x00\x00\x00\x00\x03\x00\x00\x00\x02ff\x00\x00\xf2\xa7\x00\x00\rY\x00\x00\x13\xd0\x00\x00\n[desc\x00\x00\x00\x00\x00\x00\x00\x05sRGB\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xdb\x00\x84\x00\x04\x04\x04\x04\x04\x04\x05\x05\x05\x05\x07\x07\x06\x07\x07\n\t\x08\x08\t\n\x0f\n\x0b\n\x0b\n\x0f\x16\x0e\x10\x0e\x0e\x10\x0e\x16\x14\x18\x13\x12\x13\x18\x14#\x1c\x18\x18\x1c#)" ")1,,1&gt;;&gt;QQm\x01\x04\x04\x04\x04\x04\x04\x05\x05\x05\x05\x07\x07\x06\x07\x07\n\t\x08\x08\t\n\x0f\n\x0b\n\x0b\n\x0f\x16\x0e\x10\x0e\x0e\x10\x0e\x16\x14\x18\x13\x12\x13\x18\x14#\x1c\x18\x18\x1c#)" ")1,,1&gt;;&gt;QQm\xff\xc2\x00\x11\x08\x031\x04\xf3\x03\x01\x11\x00\x02\x11\x01\x03\x11\x01\xff\xc4\x004\x00\x00\x01\x04\x03\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03\x01\x02\x04\x05\x00\x06\x07\x08\x01\x00\x03\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x02\x03\x04\x05\x06\xff\xda\x00\x0c\x03\x01\x00\x02\x10\x03\x10\x00\x00\x00\x9d\xdf\xcf\r\x97\x81\xd1d\xbcD\xd0\x8a\x89!*\x91\xa95\x98\xc6I\x11\x12\xd8j$\x13\x80\xf5X\x88\xe0\xc1\x10\n\xdb\x1b@\x0b\x1a\r\tvD\x04AdQ\xb0\x08\x87S(2^*B\xa1\xcb`\x1a\x802\x10\x11\x10\x9a\x84\xe0@@\xd7\xa9\x00$\xd4\xdd\xb5\r\t\x95\x10\x1c8\xd2\xe2\xcb2\xbc\x00\xd4U\x08\x08\xac$\x14^Rz\x0b-\xf3u\xe0`\x18N\x07T\xe0I\xa55\xa7\x05@&lt;\x0c)\xf6\x96\x8b\x14Y\x03\xd9`\xc94\x02e\x00\x83\x947\x83\xaap\x1a6\x0c\x80RZ\x04jKJ\x162G\x02\x00\x81\xc0`\xc0h\x90Q\xc1\xefB\x05\x1c\xb8)\xc2\x0c)\x81.I\x00\xe0x4\x06\r\t\x00\xca\x96\x82&amp;\xa9\xe0)F\x02\x0b\x04\xd0h` &lt;\x18\x11J\x855\xaceu\xb3Q\xd3\xb2&amp;h5\x84a\x10\xb3k4\xc4\xf8V\xfc\x9b9=$W\xb9\x8b\x00\x03\\\xa8\xb9\x06\x80\xf4\x05\xa8&lt;\xc0\xc8\xd0\x1b\n\xc3\xb9\x10*S\x12(%\x85\x0ci\x18\x89\x85\x18\x12\xdbzq\xb5S\x1eE\x90\xb0\xc5D\x8dBm\n\nKA\xea\x95\'\x04\xaa$\xd0 2I\x9e\x99\x06!\xa0\xda\xa3\x820\xc3\x98\x85\xcch&gt;\xdbP)cV\xc1\xb5(\xec\x0e\x84E1`\xcc\xdb\x06\x06EV@\x15\xa8\xec\x18@JP\xa4\xaa\x88\x98\x81\x80P\x18\xa7Z-\x0fE\x88JC\xd9eCI`G\x1d\x80\xcc\x0f\xa9\x00H\x1djr\x02a(\x18\xd64@j$\x00\x8284\x08\x89\x00\xf0`\xa0\x8e2\xaa\xb0\x04\xd4t\xde\x0c\x1b\xc0\x88\xc4X\xb0t\x10#\x81\xc1\xc0j\x93\x00\x93\x8e\x9b\xc0\xa50\x0c%\x10\xc3\x01\x01A@\x80\xc4\xd9.-:\x99t\xb9Ul\xd4\xc0\xd8i#\x04\x01\x8a"\xa1Er=\xb9vH\xae\x8eDu\t\x99W\x95ZC\x9d! \xcd\x08:\x90\x10\x04ES R@A\x00&amp;\xa7=\x11\x9a\x0e\xd3`\xc4C\xd2\n\x19!\x01\nm\xa6k3\xb2\x00\x08\x98\xed3X!\x0b\xa1Y\xa2{\x18\xc9\xd6\x9c\x03D\x86@h\xb3!\xba\x8c\xa4b\x1b24\x84\x0e\xd0\x90\x8b\x18\t\xa42\x89\x1b\r\xc8p\xce\xf4c\x0f\x94\xca\x14\xbb\x1a\xc6\xe6\x1a\x9b\xc6\xf4\xe1\reJ\xa9-5@\xa1\xc7\x90\xd3c\x1d\x88+\x01&amp;gIl\x14\x135 \x0c36\xea\x08\xe4\x00\xb2N`\x83(@s\x00\x0b!\xe8`8\x1a\xc5\x00D\xbe\x88\xa3\x861\x02\x12\x10\xc1\x91\x99r9\xb6\x01\x9517\x02\x14\xf0\x12\n\x0f\t-\x0c\x0c\x01C\x81\x81\x1c\x1c\x9c\xe1\xb8#\xb2H8M\x0c\x01\x03\xc0\xa0\xe0h (\r1\'\t\x15\x99\xd6\xb8\xa8iK\x1e\xca\xa8\x14\x16\x07K\xe4\xe6;\xdeujD\x02fb\xe6aO\xcd9\x0e`\xf5\x05\xb0 d\x99\x8a\x93)\x80\x10\x08J\x90\xc0\xc0\xcb\x14\x15\x06F\x02\xaap\x05\xac\xa9"\x92\xc5\xb0\x1a\x98\xf4@\xd5\x0fY\x9b \xe5\x8d\r\x1c\xe8\x14\x04\x9b\xd8\xb4\x14MT\xc2AS\n\x89sX\x01\xa1\xf4&gt;\x89\x16\x96\x8ccyE\x04\xd6cQ\x15\x96C\x92\x96i!\xa0HJ#\xd9\x01*\x0b[\x0e\xaa5\x1a\xb2w8\xbdR\xca\xfa\x9b\xf1lB\x8dKVd\xd9\xa1I\xa4"\x85\xbd\x8c,\x82[6\xea%\xdc\xc0\x92\xe1\x03E\x1bz\xf1\xa5\x88Z\x11.\xe4\xb6Msp\x03\t\x14D`\xf2\xd6\xc2\t\x198\xc9\xbc$\xd4\x8c\x1eK\xc75Z\x01\x00\xed`0\x0eQ\x81X\xd6\x142l\x80\x96\x12\x8c\x01\x00\xc1\x92"\x08\x01\x06\x84pp&lt;"\x81@\xc1$\x14h4\x08\xe9\x990\x04y!MPI\xaeM1V\xec\x0e\xa0\x8c\xe6\xfc\xb9\xef\x90U\x8a\xd3$|\xdb\xe5\x89#!\xc1\x96\x97D\x89\xa2\x0b(i \n\xd3BVo\x10\xc0 \xd4\x05C\xf3\x1e\xd3\xb4\x96\x83\x03\x10iX\x90\xa8x2\x88\xfa \xcb\xb0\x91\x8e\x8d\x9bh4B\xa0\xec\x1b\n\xd1\x86\x18i\x14\x11\xc5d\xc2X\x18\t\xa2hH\xa0\x1b\x124\x17\x8d\x15\x98\x9e\n6\xf2\x81e\x06\x17\\\xcd}\xab\x01\x17d\xfb\x99\xfaN\x04\x01\xc5n\x16E6\xc5\xe0I\x82\xcd\x15y\xd1\xc0\xc9\xeam\xe8\xbb\x1bk-d\xbcSR\x1b\x13\x19\x98y\x1e\x06\nqi4\xb6\xa02\x03L\x1a)\xb5\x1a\xe5\x16"\xaaee\x97\x0e\xa6s\x970\xeb\xd9\x80kP\xf4$\xa5\x02*dZ9xeL\xaa\x9a\xb0,\xd5\xcd\x85dV\x982\x979\x12Y*\x89`\xea\x87\xc3bx\x0b\xaa\x9a7HA\xe3oB\xb4p 5\t#\xaa\x96A\xb6T\xc6\x03\x97\\\x9e\xbc\x9c\x08\xaa9\xa7\x15m\xac-\xad\x13\x8e\xb6\xbc\xa4\xb9\x93\xb2n\x86I\x06\xa5\xecpf\x90\xfa\x85U\x80\xc4\x11\r\x01i+A3\x10\x1c\x04@\xc0Z\x85\xc0u\x82r\xa1\x1a\xd6\nD\xb5\x96:0B\x10\xa8#%\x02\xab~\r\xb40\x961d\x1b\x0fC\x81\xa0\xea\xa0\xb6\xd4;&amp;\xc0\x94(\xda\xa4\x81l.\xe0\x9a?\n \xf3\xa9\xb2\xa6\x0bR\xd2\xc9f\x9b\x14\x8f\xa1\xe9G\xe9\x93j\x8bR\xd4\x86\x9cI\xa2\xa0\xbb\xcc\x8a\x97 2\xe1\xe5y#\xe1\xb9\xb8\xd6&gt;EA\x98&amp;X\x80\xa4@\x9d$y\x10\x1f#\xc2\x10Kd[\x0fS\x1a\x84\xb4\xdbT\x16Nuk\x808\x02\x07\x06\xa9\x81\xa1hQ\xe4z\x06\x18\r\xa4\xb4\xb5\xa4ZeFd\xcbUT\xb4\xaa,\xb3w\xb3V\xa3\x101\x93m7:\x1aaJ\x0fL\xdf\nD\x91\x82\xbc\'\xb1\xda\x06\x08\xfa(mJ\x93[\x9a\xdcdzom\xd4Y\x11$\t:CZjE\xcc\x8b\xcdq\x81q\xa0stmxI\xb9B\xe5EM\xc8z\x8c\x07\xd1\x9aB\xdc\t\xa4\x05T\xe4\xdc\x03\xb9m\x0b+\x18\xe0\xc4`\x0f`\xb8\x03\xa4\x94\x94\x1b\xa2cO\x90\xca\x81\x00\xa2J\xc0X\x96M\x05\x8a~T\x1d\xd0\xe5H\x81\xcc\x05\x85a\xa4\x18(\x82\x91\x91\x1f=\n\x04@\xf5\x01\x03\xf6\r@*W\x11\xd9\x12:\x9c{\x98B\x92\x0b!q\xd0\xa8j\x11\xcev\xcc\x8aA\xa9\xcaY\x9b\x06Tf\x0bY\xcd\x94\x86\nAs\xe89\x1d-\xe9\x89\rfhLL2\x1c\x1f*0\x1aI\x92`\x00e\x04dz1\x87r\xda\x1bI\x8dC\xa2b\xa3H\xf9\x00\x85c\xf5\x88\xd2H\x96\xd9j\x863\x01\xa2\x94\xc60N\xac3\x04\x94v\xa12\x1c\xb93F\x8a"\x14\x0c\xe1\x96\xdb\x01\xe1\x13\xaaX\xaf4!\x88RZ\x83[\x90\x11\xd4\xd6\xd2n\x8fEoi\x92\xdf\x1a\x15\x9av\xa6\xff\x00\xce\xedB~n\xca\xdcm/^\xab\xda\xf5\xc8\xb7\x1c\x0f\x9bN\x87\x81O\xc1\xb6C\x95#\xe4JD\xa9}\xa5\xb8e@\xea\x9dI\xd6fI\xb4G\xa5\x97-I\xe9`:\x8c\x01\x824\xca\x97\xa6\x005\xack\x00\xf96H6\xf2\x88\x94\x13I\x96Q1\xa2bF\xd4RX\x87\x83(\xc6\x1f;t\x81$B\x90\x9aCe\x12E\x1d\xa6\xd0\xcb\x0e\x03\xa2&lt;\x87\x80\x9a\xd2\xd9\x0cSe,\xb6Me\x0fI\xd63P\xf5/\x08\xf6&gt;\x00f;IZC\xd1e\x06Cs\xa4\xca\x82\x9bS4\xb6$:%*&lt;\x0cC\xdc\x14\x1a\x9bB@C\x0c\x03Ks\x05AP\xda\x05\xa0\x82r\x1c\xd4\xba36\x10%D}f+\x98yU\xa2peG\xa60\x90#\xb5cD|J\xd5V\x1aT\x88\x01\x04@DM\x18\xb4n\xc4\x87d\xcd\x00\xc0f\x1a\x82\xa7\x8c\x02\x95jm\x8e@\xa6\x85\x14p\x8dD6\x10\x1f\x9d\xc1\x96\x8c\xb2%Y2\\\xe4\xec\xf4rz\xca\xbd\r\x975\xc2J\xdf\xf8\xcds\x83rC&lt;\xa2\xc8\xca\x1fP\xeaYQ\x95\x03\xaaZ\x1dI\x99\xa8\x9b\xaa~\xac\x82\xe4\xc3\x12c\t\x14\x0c\x14Mi\xd5.F\x06\tA\xc0\xf8\xb7HD\t\x82d\x9aV\x05\x136|\xcc\xd1$\xa8`\xd4\x8a$\xa1\xc9\x91\x01\x81\xf2\xd4\x15\xd0X\xf9J!\xd0:\n\r\x06\x02PUD\xb0\x152\xe4\xc9B`\xa8%\xa9\x14\x98\x187\x80\xd84c\x14\x1fS\x97/`C"\xd7*s`\x1a\xcdfiPa\x953H\x12\\\x12\x00@\xf0\x18\x04\x05.H\xc3D\xc4\x1a\x88\x8d-\xa7\xd9"\x00\xa00\xe3Q*\xe2\xb7\xa7&gt;Q\xd52\xf9\xcd\xc2\x0eir)\xd3\xad\x86\xa9\xbcP\x93\xbc\xe2\xe4e|\xc5\xde\xed\x91\xb5\xc9\xa4Q\x04\xad\xdaH51\xb56LQ\xf5"\xd8|\xc27\r\x9697\x01E\x8c@\x94\xac\xf3D\x96\xc9#A#Pa\x1e)&amp;\x9e\x06r\xca1\x8f\x87"+p\xd9\xd6t\x93\x12\xe2U]\x17\x84\xa0\xe0\xd8\x99\xb9\x12\x8c\x01\xa0\x959Q\x8d5\xc8\xed\xa5!\xd1_\xac\xe9\xde\x9cj]&lt;\xe3\xa5]5\xafc\xbd\xbdfj\x9a\xf0\x10\xa2\xb5f\xd4\xba#\x12i"&amp;\xc1\xe4h\xd9b\x99\xc0\xb0\xa7igD+k\xe6%\xe48\x138\x15\x03\x84\xe0Z2\xd3\xa5\x0e(\xd2\xdd&amp;:e\x03JB\x03C\x1ax\x0eS,\xc0m5f\n@\x9e\x86\xd4\x92\xd0\xb7IIPH\xac\x86\xaa\x91\x91\xd8\xf9\x15\xcb\x9a}\x02\xa2&lt;\\\x9cY\x13\x8c\x02\x1e\x13#\' \xa0\x83Bjmh\xa9\x10\x10\x18\x0cM"\x8e\x9b\x18T\xcd\xa2\x8eD{N\xd0\x96\xa8&lt;\xe4T;@\xda-\x0f\xbb=\x03\xaf;\x9c\x15\xbeE\r\xb9*\xee\x14\xeb\x9d9\xec8\xad+W[:m\x13Z\xe4\x1b\xbc&gt;j\x9c\x9a6"\xb4W\x9d\xd6\xb3\xd0\xd4Vk\x11\xa9\xdbg`\xc9\xe9V\x1b\x1d:\xd4N\x85\xd2\x9f\x07Q\xe2\xd2\xf9^EJ\x01\xc0\xd8\x05\xa3\x82\xc9\xa9\xa2p\x06DNd\x8b\x91\xe6\xe4`\xef\x1dl\xddT=\x0e\x12\xde\xe3\xc4Upl|\x83$\xe0e\xa7\xd4e%i\x80+#\xed\x14\xfb\x1a\x97fzwvZ\x9df\xdb%\xb9d\xec\xaf*\xbc\xed@MV4\xa0jS\x85Z\x99\x93\x84\x0c\x8a\x8f4\xec\xdb\x18\xeaS47\xf0\xec\x18=\x87&amp;i\t\x9c\xaa\x1b\x08\xc2\x8dc.[$\x99k\x0c\x92)A\xa3\x12T\x08\x1c\x91B:Pz\x14p\x89d\xf8%\x04\xa69\x89R\xfd$\xbd\x91\x0e\xd1)\xbb\x96\x87\x8dH\x9bhG\x1cKe\x98r\x0c\xdb\x18\x99\xd6@\xf40 \x00\xdc\x13:\xb7\xca\x85L\x80A\xae\xb2\xa2D1\x12!\xbe,qO\x90\xa0\x8d\xc4\xd5\x16\xa2+ShB\x99\x88\xa85\x19f\xb3\xd9\x1c\xe3\xb3\x190\xb3\x9e\xe1\xd5=\x95)?u\xd4\xf0\x8ek\xdb\x0c\xe3\xd2\x9d\xd6\xbf\xa3\xdc\xe4\x95\x0c\xc9T\xd6\x90e\x19\x105\x99\xbbaz\xe6\x1a\xbe\xaf\xcfz\r\x1a\xeci\xba\xce\\\xc7\xaa\xba4GJ\xe0\xd6\xcat\x14Q\x93\x00\x14 \xd9\x04$\x81\n\xa1U~\x8a\xd0\xb6N\xbf\x17\x7f\x83\xb6\xdaw\x8d\xea\xbfW\xc7\xe9\xec\\N\xaf\x83R\xe4\xe4\xa9@\xcb\x8c\xa9u&amp;\xb1\x80\x06Q\xf6G&lt;\xf43\xd5\xfb\xb1\x89y\xd3\xc3m\x92\x1c\x9e\xdaf\xb5\x88\xd2XE\xa41C\x15\xab\x85.\xa12\xa28\x011\xcd\x0b=b\xa8\x9dy\xcc\xb1\xe8\xe96\xfa0\xf6\x88-y\x1c\xbc\x08\xf3\x11jEJ\x0bf\x92\xc2B\xcaI\x08\xec\x16\n\xe04\x96Iy\xd6\x00\xedy\xf3\xb5\xd6hvi\r\xca_\xe6\xe6 \xecMr[K\xd5\x01\xa23,1\xbc\xc5\xb6,\x89\x809\xe5\xdf=\xdavh:\xd6!s\x19\x14\xca\x15\x0eG&gt;k\x94u\xc6\xe3\x0f\xb6\xf0\xe9*\x18\xc0-U\xf4\xce\xbbs0-\xa4\xd8\xb9\xf4$\xdc\x9c\xaa&lt;\x8a\x0e\xaa\x8b\xac\xb1\xc0\xda\x9bc\xca\xae\xc4&lt;\x89A(\xa0\xda9W\xa3\x8d\xf4\xb7s^\x8f\xa3\x9b\xa6{\x17&gt;\x9a\xb7L\xedji\xb6[n\n\x8bg\xaaF\x9b\x113k:8\xd2\xef\x0b5\xe7\xa5\xd5\xca\x9b\xda\xb4\xc7S\x08\xc9\xf6\xcc\xceM\xbb\xe9\x1c\xb5[\xae:v\x95\x16g\xa6ro\xbe\xc5D\x8at\xb2\xb0\x14D\xa5D\x17c\x8eU\x11V\xe2\x98\x01KT\xc5\xf4|j~\x87@\xde\xa2\xe8\xf9&gt;\x8e\xff\x00\xce\xaa\xcf:\x8d"\xa4\xf0m\xac\xa8V\x99M\xb4Wh\xb4n\xfcy\xbf\xa1\t\xd1\x95N\xb9C\x8b\x8fR\xb3P\xa2\x896\t@\xdb(\x83r\xa9\xe4\xb5\x14\x85\x04/\x11\x81A7\x8a\xa4\xe9\x04HdV\xe7\xab\xe8\xb9\xa5\xb6\xb3\xa1\x07C\xc5\xec&lt;g)\xa8\x8f\xd7\x8e\xa59\xd6\xdd\xbc.\x95m$i\x1b\xe7\xbbqo\xad\x8f[\xed\xc2U-\xd7\x9e\x9f5Sd\xc9z\x0e\xfa\xeb\x17\x9fe\xc6y\xa6Z\xf4|\xebr\xcdj\xda\xab\x87\x815WT\xa0\xea7*\xdcr\xd2L\x01\x95\x1e\x8c\x9a\xd3\xad\xe8[Y3}\xab\x8e$\xab\x8d\x85\nfk\xa6\xd1\xc9\xb7\x9e;\xd2\xfa\xfe\x0f\xb1\xf1\x98\xd69\x08\xf96\xd3\xcc\xba\x1cG]\xaf\x94\xeb\xfc\xf6\xc2\x89\x9b\xc8\x18\x07\xd0\x8c\rj.\x8a~\xa4\x95PyG\x88{\x0f\xb4\x06\xb4.\xb5i\x92\xb9\x83@\xd4:7\x8cMg\xaau\x8b7\xe9*jy\xa5\x9b\xdeW\xb2e:\xf7nz\xe6z\xf4~j\xe7]&amp;\xb4\x8e\x97\x89\xa2Q]\xa1\xb5\xe0o!\xcfY\xd83\x9d;\xa4\xe7\xe1WG]\xe2}\x17=\x84\n\x88\x94I\xa3\x05X\x06\x16\x05U8\x03\xb9\x82#UX=\xd1U\x96\x8f\xa0V\xb0\xee\xb9N\xaa\xf7\xce\xaa\xef:\x89\x06\t\xc0\xdbKP\x8d6\x98(\xa6\xe9\x8ew\xea\xe3\xa9u@\xb5\xca6\xb9I\x16\xb5\x1aA\xcfJ\xa8\xa4\x9672D*ejY1\x02!AU\x199\x02\x87\x14\xd5V\xba\xe2\xe4\x05Ut\xb6\xd0GR\n\xbc\x17cQ\xd5y\x0eL\xa2\xbf\xa3\x1dw\xa3*\x05\xa6\xdd%\x0eE\xc3\xca\x93\xaf&gt;\x8f\x8fG\x14U\x0bx\xe8x\xd6\xb9\x9bM\xb3\x89\xa1\xbf\xf2\xdf\x157\xb5\xdb.\xe51\xcc\xf2\xd6\x99]\xfc\xaes\xb1\xd8k- 64\xe1\xe9Ss;\xbesq\x05]/3t\xbd\x9b\x1a\xe7\xe8\xea\xda\xe7\x11\x9d\x0b\x8e\xa2\xca\xd0f\xf6(\xbe\xb7\xc9\xa5\xc7&lt;\xd0vG#\xea\xc3p\x92\n\xba\xbd\\[\x9d\xf7\x9dk\x91\xa5^\x97\x15\xbe\xaf\xccn\x99X\xca.nd\x80\x01h4\x0c\xd05R5\x1d\x9530\x8c\x0b\x1d&amp;L\x86\xc70\xd2=\r\x02\xb1w\x94\x07\xc9\\:\xc6J\xa11Rt\x1c\xe6L\xd5u\xd4$l\x01Y\xb9F\x8d\x87\x07YO_f\xe4\xf3\x8b\xa1\xa12E\x9b\xeeE\x8e\x1a \x05\x19A(2\x1a\rHb\xa4\xa0\x0e\xa7\xb2\x85;^GxU\xae\x95\xban\x12\xceKN\xe7\xce\xd2\xbf\xcf\xa5\x80\xe98\x13T\x8f&lt;\x01\xd3\x8bF\xad\xdd\x1a\x17\xb1\x84}r\xa6\xd3*\xbdsS:H\xd72\xd2\x8f=\xa5Jm#E\xc6b\\\t\xc0#XELJ*qG,S\xc79\xe5\r*\xb2\xca8\xa5\t\x85jP\xb6\xb4zk\x91i\xb9\xcf \xef\xca\x05\xc2"\xfbD\xb1M\xc6\xb5\xee\x98\xdbsZ1P:gm\xc2\xdf\x83\x86\x1a\xbfK\xdf9^\xaa^\xbd\xd3\x9e\xed\x13W\x86\xf4c\xea\xc9r}\x96\xd74j\xc7x\x173\xd2\xa7\xe1~\x8d\x99\xbd\x95\xcen|\xd3\xbe\x95\\\xbb\x02op\xd3\'\xe9\x9d\xfeoN\x1e\xd7\x11\xa9;\xef\x1c\x97\xd78Ns\xd9\x9f\x9c{\xb5\xe9Q\x96\x9f[Q\xa91]9\xf3\xeaS\xb5\xfdN\x13\xdd9\r\xe3\x93I\x0e\xb3:\x18I\x08\xb4\x98\xc8\xe2%#Q0\xa8\xf26\x86Q#0\x12\xda\xd9\xd0)&amp;"N\x92\xebA\xd9\t\x07\x82"p\xd8:2\\\xa4d\xcb\xdbx\xe4h\x1a\xc6\xa0p\xe3L\xb6\x93XF-\x99\xa2h17am\x06\x0b\x18\xfa\x0c6\xc8D\x84\xca\xe0c\xa8\xdb*\x086~j\xb1\xcd\xd9k[\xe7B\xcd\x0eZ\xaa\xe3\xcf\xd2\xa7\x82\xa4@\xf4\xb1\x89i\xa49\xa1\xdb\x81\xa1\xa2\xfay\xe8^\xa6\x12\x9e5z\xc0\xf5\x9a\xc677W\x96\x95\x11\xbc\t\x839\x0c\xdc\x9a\x93\xe9\x10\xc5_\x9e\xb8QR\x9a\x9cQL\x07\x05D\x92\xa5\xb0\x07J\xbeusr\xeaFN\xe4\x8fNq\xc90P5TW3\x0bu\xc8\x14k!\xad\xf6N\xff\x00\x83\xd7q\xa8\x9d9\xdd\xc3NrDW&gt;\xe9\xae\xab\x83\xe5:*\x9e\x83\xaadq\\v5\xc7A\xa3\x98Qp\xaa\xdf^n\x83\x15\xc3\xf4\xbd\xb7\x1a\xed\x82\xbe\x99\xd5\xb5\xcb\xc9\xfd5\xd3y\xf7\xd43\xd6\xca\x89\xf5\x94\x1c\xa7D{\xd2F\x9bC\xc7\xbcr.\xc3\xc5ZwF\x1e}\xf45\xbb\xc7&gt;\x7f\xbfM\xa2\xc6\x19\xa6\xde\xb9k/m\xb1\xcc\xb4\xbaG\x1b\xdf\xf9jmSr\xa17`\x00r*1\x85\x04\x03P\xb0##\xd1\x88\ni\x1598 &amp;Y\xd4L\xa9\xcd\x08M\xb9\x03dX$K\x889t\x8a\xd4P"\rA\xec\x8f\x989\xa30`6\x9c\xd4\x96\x0fhb\x1b\x15\x1eo$e$\xa4v\x1a\x87\xc0\xc4\xdc\xd8\x91\x95U{D|\x0b\x1c\xdc\x89,4\xad\x9bp\xf6h\xf9\xefg\xc4UpQ\xe0D\x9c\x19k\x08e&amp;[\xa9\xd5s\x9fo-K\xbb\x07\xceu\xf6\xa2\xeb.P\xa9\xd0\xe7I\x1b\xd3\xccFo&amp;\xeeUT*\xb2\xce\xab\x05V\xe8\xfaD\xaa\x9b\x03(\xea\xea\xc2,i\x93N\x15\x93\x88\x13\xadrr\x89\x94N\xd5G\xa8\xf9&amp;\xe7\x99\x8c\x11K\xdd\x12f\xabS\x82wcM\xdb=\x9b\xcf\xdf~\xe1\xa1T:Y%:\x9c](\x99\xa8\xe2\x92\xc2\x15\x11\xac\xbc\xdc\xac*\xd9\xb4\x10\xcc\xd1t\xbd*\xc1 \x97`\xa5"x?Eh\x05\x1f\r\xb5\xd6m\x0b&gt;\xd3\xcd\x1cB\xb6\xa8\xddeG\xa1\xf8+\xa1r\xdd6\x98y{\xd1\xdb\xa5\xe3\x87+\xea\xea\xb19\xaa\x87\xd0\xdeZ}\xedh\x85Gp\xe47NbMS2\xa17`\x08\xe4t1\xb9\x08F9\xacC\xa1\x82\x05\xb0VV\xcd\x1a\x19\x00\xc1*\xd3\x9c\xb6\x894-\x81\x92\xb8\t\x8d,\x92h\x16\xd1\x14\x06\xc9\x08\x93$b\x8d4\x92E\x10\xd8\xdb\x99\x90I\xdac\x06*\x8c8\xd2K\xd1-#1\xd42\x07\xa6\xc6\xd43J\x111y\xd0F\xea/\xaa\xb6=\xc8\xb6k\xd1\xad\xbf\tU\xe7[\xb1\xa24\xca\x86!A\x96\xc4\xe6\x87\xae9g\xbf\xc7G\xd3\x9c\x99\xb8\x8c\x84\xca\xbbV\n5\xfct\xcaO\xa9\x8b\x8e\xc5\x9a\xbf\xe5\xe9\xad]\x11\xcc\xd8:m\xb3\x91X=\xca5I\x1bL\xa9\x83\x9a\x86\xa9\xd4\xe3\x12`\x13d\x1b\x85\xb3\xbc\xfde\xc6^\xf16S&lt;\x18\x9a\x00*u\xde\xf84+&lt;t\xb5\xc8I16\x81i\x85\x91P\xf4c\x0b\xaa:\x03\tSsI\xd1\x11\xc4P\x8e\x0f(\x8a\xc7Hb@\x8d\x00rB\x92Nl\xd24\x01T\x06O\x9a0\xce\xd5q\x84{\x9eM\xda\xe3\xbc6\xf4\xf6\x89\xb9q\xac\xad\\I\x9b\xd93-\x0b4\xd9\x06\x82\x04\xe0`\x0bD\x1bGC\xb2\xa5`\xb3\xb7"E\xc4=T\x18\xa4nVFY0\x1e\x11h\x99D\n$\xe6\x10\x18\x812E\x0fS^\x18\x05\x02\xb2:a\x9a2\x1a\xe5)*\xa1\x83\xda% P\x80\xc4.\x89m\x18\x15\x91\xf2\x1c76p\x18F\x08\xd2\x10\x08\x16\x16Yu\x94\x96\x1f\r\xed8\x8a\x9f:\xd7\n(\x92\xa1\x88p\n\x98.u\xdfC&gt;g\xeeqQtg\n4\x86\x04F\xbf\x9d\x1e\xe6m Md\xd3K\xb8\xc3y&lt;}\x97S\xb51\x96\x9bE\x1e\xd9N\xd3\t*\xcd\x9e\xa7\xce\xea\xaaa\xd6Q\xef4y\xd5Qd\x15)\xa0\xce\xd6\xff\x00\xa6^\x97\xe3-\xb8jlQX\xe0\x10\x0cB\xd2]\x12x\xb7\xb1\xe3T\xf0\x1bC\x02\x108\x0e\xc4\xd0\x93#`\xc0s3L\xc4\x11U97\x94\xe6\xda\xe4-\x15&amp;I\x1f\x19\x12\t\x9d\xc8\x9a\xc0HIFS[d\xa2L\xc5^\x93\xe6\x8f@\xa2\xd2\'F\xbe\x9b\xc3;|\x1c\xbbR\xe5DDk\xa7\xcdfu&amp;F\x03\xe80\x1e\x94f\x94$\x15\x1b24\\\xddB\xed\x01j\x9ejl0f:\xcc\x0b\x80[\x1ddf\x0b \xa0D9\x91\xa8Rc\x81\xa4\x1a\x03D)f\x9a:ei\xb5/l\x00\xd1\x19\xa6Q\x92\x16\xc8\x96\x8e\xd1\xc1\x00\x1452\xa6\xd0\x1801\x08\x82\x04\x9b,\xfa\xcd3E\xb2s\xf4Xq\x15\\\x16L\x1a\xa46\x95$\x01\xd8\x0b\x9dg\xd3\x8eq\xedqj\xdb\xe3\x17-+\x80\n\xa0\xf3k+i&amp;\xb1\x0b;.zY;\xdd\xf9:l9;[6\x02h\xf4\x8doI\xb6\xbc\x96u\xb8\xcffAN\xe7\\\xd2h\xf4\xca\x1dc\x0b~bT\xd4\xaa\x9fNh\xb7\xd3/Eq\x13\xf8\xb5\x95\x85\xc9\xb9u\xa1\xb1\x18\xc1,K\xd56\xc9R\xdd"\x04F\x11\x00\x06\xd0J\x1b\xa3\x95\x88@\xc9aMn\x02\x88\xe9\x8cd\x1a\x05.\xd1\'H\x89\x85\xc7\x10\xeb*\x8a\x9b\\\x80\x0f\x15K\xcbi\x92G\xd1L\x94mffs_\xac@\xddcSq\xd2\xf6n+\x89{NM5E,\xd5\xb9p\xb9\xa9\xba;Y\x0fB\x84\x99\x0ba\x01\x8e\xa1dT\xe5S\xb4sz \xbb\xcbU\x03\x13$s\n\x82\x14pp\x92\x80\x02#\x01\xccs\x1c\xd4`\xc9M\x01\xb2&lt;8\xaa\x8d.K$4F\xa11\x82k%1\x94=\x06\xb4\x1bE\x07\x08\x1655@\xc1\x06\xe0\x12\x1c\x8cD\xbd\x0b\x1e\xa3D\xb3n\xc7{\x1e\x12\xa3\x82\xcf\x93YQ\x83\t\xc0\x0e\x80\x9a\xad\xef\x8ec\xebs\xea\xdd\x9c\xd13\xaa\xf1\xb1]6]7\xa0\xd5Rr\xablj\xcb&gt;\x8b\xce}\xe4\xe7\xa3\xd3A\n\xa5\x944P\xee\xa0\xdd\xb5LBi)T\xdePo\x1an\xbe&amp;\xf4s\xd6\xe7\xa5x\xefiu\x8c\xce\xc7\xc2\xcd\xcaM\xce\xa6HAe\x03\xbaB\x9d\x03\\\xe0&lt;h%\x16\r`\xc0\r\x80\xb2E\x0b\x88\xb4ft\x93Lad\x1aq\xc6\xd6\x9foD\xdb&gt;g\xe8qk\xdc\xfan\xf8m\xcf6\x9d\xf5g\xa1\xe8\xa8\xe9n\x99\xd6\nF&amp;\xab\xd1}k\x02\xa7G\xd8\xf9\x97\x9e\xba\x96\xd7s\x1a\xe7\xa9\xe4\xf9\xdb\xb6\xa5\xb5m4\x99]u\xe5\'*\xad\xab\xe8\xfc&amp;\x8f\xd8\xb6H6\x90\xd7\x8a\xea\\\x9a\xe5\xd4\x99\x02\xa9 \xa6\x87cd\x9d\xa2V\xb3\x93Q\xb3OI\xa0\x83\x92Q\x9ac\x02\x0f(R`I\x01\x00\xaab\x80\xda\x90\xd6\x04\tl\x8a\x94\x99\x80\x8cv\x92\n\x00\x86I&lt;3i\x8c\xc9(Z\x10\x1bR0Px\x04\x12\x85\x06&amp;\x19x\x89\xd6\x17\xa0\xd3l\xde\xb3\xdeg\x9eWpZf\xde\x94pi$\x06\xb7\x1d\x90\xf6\x9eo\xe9\xe5\xa4\xfa|\xb5\xf4Aa\xa7K\xee&gt;\xdb.}\xcf\x9e\xa7\x8b\x99\x93yR\xe6\x87Ch*\x19\r\x8c\tA\x08\x971\xb6\x9a\xf1B\xa5UY\xc5\xac\xb5:\xca\x8f\xb7\x8aM\xe5kQ.\x8e\x83\x8e\xbd\x7f\xcf\xbei\xd3\xcb\xb1\xd5o\xde~\xadc\xdb\xd2\xfbq\xd9a\xdfqm\x17:;\x035L\xd5\x81$LrJCl\x1d\x19\x00\x18\x0b\x0f\x8dJ\x8a.v\x88l\xdbS\x8a\xccN\x1dg\xe7oW\x92\xfe\xa6w\x0e\xd4=\x18v&gt;,\xfc\xcf\xec8\x96l\x9c\xf7YF\xc3\x92\xd1\xba\xb5\xb1\xca7\xbcWf\xe3&lt;\xe7\xdd\xa7B\xd2h7\x8d\xa5\x1bG2\xb3\xc2\xb8\xff\x00\\w\t\xbd3\xab&amp;p\xd7)\xeb\xbd\xbb\x8e\xabw6\x1eSD\xec\xae\xe5\xcd]\x1f\x86\xe6n2Z\xa7\x16\x02\xc3%\xcc\xbd\x90\x04\xf8\xa8nH\xa4C\x90\xec\x84\x19\x8dm\x80\xc9\xb0H\xe0\x94\xc4\x08\xd7\x11A\xcd\x1d\xa5\x08\xd2\xd2(\x89\x90\x10$T\x8e\x88\xc1\x80FJ\xea\x88\xd47\x06d8\x01\xac\xb0\x1001\x83\xa4\x80\x05CM\xb2ZX\x1d\xcdZ\xce\x81\x9fD\xae\'Y\xe6RA\x89 \x04\x14\x1c&amp;\n\r\x1a\x7f\xaas\x0fW\x96\x98\x8a\xfb6.^\xcd\x83\x93\xa2f\x1bJ\x8d^\x12\x19\x93\xa1A@\x01\x1d\x8c\xd0.N48\xb5Q\xae\x83\xb6p\xa6`\xd9_\xaf4\nZ\xbc\x1a\xa6\xdc\xb2\xb7\xc0w\x1b-\xcfU\x87\xd5\xfc\xd9\xe3\xbd\xb8k^\x86&gt;\x85\xf1t\xe5\xbd\xe6\xa4\xd8\xfbr\xef\xfe]\xec\\;71\xbb:\x9c\xef\xcd\xbd\xf1\xd8\xf1\xc6\x83\x0e\x8em\xbe\x9e\x9d\xe3\x89p\x0e\xcadq\x9e\xf5d\xab\xa9\xf0V\xc3\x80\xa3T.{\x14k )\xc2|\xdck\xbb=\x91V\xcb\xcf\xa7\x13\xed\xca\xfa\xf1\xd7\x9d$WS\xc6\xf44\xb5\x1e\x92\xef)\x8fZ_)\xed|\xc7\x9e\xbb/\xb9J\xe3}\x0b\xa3\x9c\xfa\xde\x93c\x86\xb5Q}zcM\xee\x9b^]y\xbe\xb5\xd1\xf9\xe3\x95\xeeu^\x05\xc7:\xef\xd1\\u\xb2\xe5D\xd4F\xe4\x940\x1c\xcbiM\x02\xd9\x04\x1a\x87\xa0lu\xca\x03\xd5\x15\n\x98"\xa2\x81A\xa0e0uQr\xa3\xe1\xac\x8e\xac\x9dI\x14&amp;cU6\x86\xd1%\x12\x00l\x08 Z\xee\xabw\x88\xf83\xcbV\x0ft\x909\x0cf\x03,hc\x06\xa8qV:\xa8}\x15F\x9e\xeb\x9e\x92\xf8\x9dg\x9bC\xccrH\x0c\x0c\x0c\x16\n\x1b(\xbb\xe3\x96\xfayh[\x90\xc7\xd08z\xcf\x8e\xe6\t\n\xac\xe6\xcf\x9d\xe4^\x04\xc0h\x05\x81lYPB5\xd4:\xa8\x17\x11t\x9a}\x14\r9`QQ/J3\x06\x98\x0bL\xf7\x9b\x8fA\x1c\xdb\x87\x12\xe5=\xb8k\x1d%F\x02tez\xa3a\xd5t\xae\r\xf4\xab\xcbs\xe5\xdbY\xe8\xa1I\xe7\x1d:;\x1f&lt;iq\xb76\xe9^\xa3\xe7\xc2\x9b\x12Jzf\x8e\xb3\xb1W9\xec\\\x8fz\xe2\xad7h\xbd\xc4\xdb\xf0\xea\x94\x9e :Lw\x94+\x14\x1d\n\x0e\x84\xfez\x95:\xc7\xd6\n\xd0$\xa8a!G\xdc\xbc\xc2\xef\xd1E\xb2\xbaqA\xa6\x93\xe3=sg\x0c[\x8ez\x14\x91o23(\xae\xaes\xce\x82\xee\xef\x9a\xa9\xf76\xfez\x9c\x9a\xd8\xea\x0f\xa2F\x07 c\x98\xcc\xb0\xa0\xc4=\x11X\xaec\x01\xd32q\x10\x91\xa0\xc1m%(\x95\x11\x88?\x0fj\xf1\xf5K\xf4|\xf5\xe8\xc8y\x83f&amp;\xe1\x9a\x89\x12\x0c\x1c\x0c\x05D\x84C\xde\x02\xc2Sr2B\xb0Vc\x06\r\xa1A\xe0\x8a\x835a\xaa\xac\xe8\xaa\xc9{\x82\xb9\x1c.\xa3\xcd\xb7\xe6*O\x00\x8b\x03\x04\xc0\x8a(;G?\xf4\x8eS\xe8\x169\xde\xdd\xc3\xd3W\x14\x9a&amp;\xea\xae\xe3I\xd8k?;\xcc\xe9\x01\x04t\xc4\xec\x19\xb1\x85n\x85V\x8e\xa8U\xbbE^\xd0*\xc2+P]\x0e]Y\x9cm\xb0\xda)z+&gt;M\x87\x19\xe3\x9d\xf8\xd2\xe9\x1a\x0c\x16\x1a\xad\x87&lt;\xee7\x8b\\\xf6\xe5\xfd\xbc\xdd\x17\x83m\x06\xef\xa0\xbeZ\xec;j\xf1\xae9\x97U\xfe\xb8\xeeW\x96\xb3\xa4\xd0s\xde\xdf;T]Y\x19VK\xea\xd9G4\xeb:_4\xef&lt;\xba\xee\x98\xb86q&gt;\xfc\xe3\x13\xd7y\x96\x85u\xab\xf4d\xc7\xa7\xa7&lt;\xadc\xc5\xf2\x0e\xfez\xfa\x8e\xbb\xc7o/J\xaa\xd6\xf5]\xf7\x96\xc4\xcd/\xa7([e\xb9\xe5\xa6d\xf8\xe7dE\x0e\xc7\xcc\xf5]\xde\x86.\xd5\xceR\xec\xf5\xfd\x96\xf1\x85\xed&lt;\x9b\xa2\x97\xda\xa7\xe9\x99\x99*\xbe\x8c\xe7\xd9.)\xb4H\xc2\xf2*\xc6\xc7\xd4\xb0\x81\'\x19\x08SP\x104\x81\xb7\'\x1d\x12j;\x91\xed&lt;_\xb70^]\xab\xcd\xe8v\x1a\x9f\xa7\x95Z\x81/\x91k]\x8b\x1a\x9c\x821\xe3c\x0e(\xb9\x82\x16+&amp;\xd9\xb3@\x8d\xb2Q\xb3\xb36&amp;\x03I\x04\x99m\xa8`\x1d7\'o\xa5k\xdd\x04x\xd3k\xb0\xdc\x0e\xbb\xcc\xb7\xc3\x12N\x06\x92\xa0\xd0`\x0c!\xd9\xacv\x9c\x83\xd5\x9d\xb7\x9bY\xd8mAu\x1d\x8c\xa75\xb4*nw?\x97bC\x94%\x80f\x90\x82\x1d\x95\xba*=&amp;\xad\xa3\n\x8a\xe7\\pg6\xd6\xa4\x8f\x99L\xd7o\x87\xa2\xa3&gt;\xc9\xc9\xcfe3\xcf;\xf3\xe3\x9dXUN\x97\x1aOL\xe597^[D\xd4\xfd\xf0\xb9\xe6|C\xa3I\xae7\xee&gt;\x98\xb3\x1c\xf7.\xab\xdd#p\x89\xe4}3\'*\xcclu\xb5\x93\xc7^Gn9\xf9\x87T\xdfr\x9e\x8e\xe2\xdb`\xe6\xd3F\xe8&lt;\xd1\xe8g7I\xe8\x9c\x99\xf3\xea\xda\xda\xf2\xdcs\xbe\xd7\xe7V\xb1z\xf1\x0e\xee}\xa2&amp;\xfe\x96\x8a\xf7\xd91:$\xbd\xff\x00\x98\xd6w&lt;\xd9\xe8D\xab:\x875C\x97\xcd\xfa\x9e\xef\x81\xb4c\x97*\xec\xab\xc8[\x0ep\x1b!+\xec|\x86\xcf\x8fL\x8c\xd5\x7ff|w\xd3\xe7\xd9r\xcf\\\xee\xca\xdf.\x89\x82\x8d\xb6{\xe7\x06\xb29\xf5\xbdZ\xf2\xee\xb8\xac\xdf\x10\xe4\xee!\xc7\x9b\x80\x8bV^\xe4j{\x9dC\xcf\xd5\xd9\xd3\xedD\xd28\xb7\xa3\x1a\xe6\x98o\xb9(4\xee\x024\x14\xd1\xa3\x93\xdd\xb0{T9\x08K\x9am\xa4\xd9\xeb\'\x12\xabY\xa3n+[=\xbb\x9c\xd9\xb3x\x0f\xa0R\xc7\xbc\xc6\xc9cm\xa1\xd2\x9a\\\xc9\xd6\xefB\x83\xa0f[l\xbbK\xb8]o\x97d\x86\xd4\xb00\x9c\x06\x00\x80m\x82\xea\xa3\xa0\xe7\xfe\xa4\xd8\xf1\xd83\xe8\xae\xdbY\x10,X\xe9eHp\xb1\xade\x1aLA`\x8b\x17\x0bR\x15\xa1\xa8"\x96\xa8\x89WYUC\xa4\xd5m$y\x98\xcfH\x16\\z_\x0e]\xa3\x8dZ\xccWtc\x17\xab\x9f\x98ic\xddt\x0e\rb\xda.n\x8blw\x8c_!\xef5\xfa7nz\xb9\xceu\xb5s\xe6\xb6\x19\x9d#@r\xa1\xedTw\xad\xac\xe3\x02^\xf8\xb1\xd3:\xa6_.\xdd\x17\x9e\xb7\xa9%#Oq\xc3\xba\xd6\xff\x003\xc8\xee\xb7ba\xb5\xdf\xf9+U\xady\x1fN\x1b\x9cNl\xb9\xf4to\xf8@v\xae\xff\x00\xc4G\xd8\xe4\x9aV\x93\xa9\xbf)\xd6\x1evp\xed\x93\xd5\xac-\xbb,\x81Z\xd9h\xd3\xd3\xed&lt;\xabi\xe7\xe9t\xa6\xf4g\xc2\xfd&lt;-\xe6#\xfax\xddeuy\xd6\x91\xa2\xe9&gt;~\xdbW&gt;\xbbT^\xad\xd7\x96\x9d\xdd\x8e\x91\xcf];\x03X\xd5\xe9H\xbc\xd2\xb6\x0ew\xa9\xb3\xbb\xf0\xeb\':\x95J\xb7H\xf3\x8f\xa37\x0en\xb5\xc8\x1b\x15\x18U\x10L\x8a\x90\xb3\xe8\x10\xed\xf0\xad\xb3#N\xe9\xbei\xdb#\xe3\xbd\xef\x13\x8e\xf4\xc5\xf4\xc8\xf0\xb9;-\xbb\n\xeaxk\xaf\xf5\xe7\xa6\xf4c\xb7a|\xf6\xeb}\xcaWH\xa0\xe9!\xe2\xf6\xbem\xf6\xbeN\x8b\x9e\xb8\xa1\xe8\r\x96\xd7zK\xf8]w\x97k\r\x8d`8\x1a\rlS5\x1d\x1d\x15\xda\x01f\xa9\xdf\x13\xa4\x0f7d7p\xa8\rDz\x88\x14\xa4c\xa5\x8f?A\xdd\xce\x14\xb4\xaa\xa3h\x16=\x01sYS]\xaeB\xa4\xd9\xd7-Es[\xab\x9asi\xd3\x1b\x1d\xe7\xbb\xe3\xb9q\xae\xb5\x97\x9ay\xc5\x9a\x9eR\xed/\xb5\x8e\xf9\xc2Z\xf3#\xdab\x197\xe6\x1e\xe3V\xe9\x8e\xe9\x82\xea\x9c\xe1a\x07\x9e\xdb\xb1\x824\x8d\xb9\x08d\\\xa6\xd1\xa0\xb28\x1d\xbb!\xa8\xb4\x1d\x15M\x1b\xcf*\xe5]\xea\x06\x93\xb3b\xad\xf9t\xbc\xd4\xe4\x1a$\xe8][(\xe5S\xb0v["]\x1e\x0b\xd8\xadJ\r\x03\xa1v^s\x91\xee\xaa\xb4\x8e\x83\x99H\xea\x86\xdc\xd4[\xcc\xe8[\x8cO\xd0\xdc5u\x95\xc9w\x1dG\x9c}\t\x9b\xa6\x17\xde\x9f&gt;\xdb\x93\xaf\xe7\xdbW\xb8\xe9&lt;w{\x96\xd7\x91u]\xf8\xea:a\xc8r\xdb\xa6g\x9dV\xd7O(:\xd5\xee/V\x95\xdf\xb9.fv\x15U\x9aG\r\xeb\x8dT6\xcd\x8a\x1dcdS\xafA\x08rQ\xd59_@\x1c\x9c\xca\xad\x8ec\xa9\xa6\xad6\tE\xac\xe1\xc5M\x8a\xd6z\xe1\xfcO\xbc\xf3\xde\x95\xe8N\xbd\xdb\x84\x0ew\x04\xd3\xads\xc4=\xd79\xe9+1\xbe\xb3\xc1\xae\xe7\xcb\xb5\xd7Q\xac\xf4\x969m}\xa4/\x9e\xeb\xb8-\xf0\xd8\x90\xc3\x03\x01(\x84\xcdw\xbb\xb6\x92\xf7v*&amp;\xd0E\x9cL\xf7\x87\xa3\xd7\xa8\xb4\xcf-b\xe2\xb3y\xda3\xbb&gt;N\x87\x9b\xcd\x11\xc5Q4\x1aR\xe9\n\xa7G\xb9\xd2:r\xbes\'\x12B\ni\x02\xb4\x9eg\xa8\x19\xec\xba+L{,\xe2:\xfe&gt;;LkuU\xc4\xecPJ\xccT\xb4~\x85\xb3f[\xe7A\xb2\x00N\x87:J\xae\x89vS&gt;^3$f\xb2\x1b\x05\x93\xb2VEL\xb9\x90\x03t\xac"\x1b\x12\x88\xcc\xc8\xfd\t\xf4\x8c\x9ct\x9d#\x19\x9a\x0b#e\xc4\xd4\x98\xd4\xb6I\x8a\x12\x1fH\xf9 \xd8\x19d@\xec\x8c\xd1A\t\x80\x16\x15V&lt;\xd5 \xa0\xe9Q\x9c\xc3\xdaf\x11+\xa39uq\x11V\xa4\xd8\xdc\xbd\\\xc9\xado\xa7\x1d\x0f\xa3\rW\x1d\xeec=\xa0\xa6\xf2\xdd\xee\xa6\xbbF\xc57\xb7\xe2\xd5\xc8Q\x1e\xdf7\xa7\x01E\xa3\x01u2\xde\xba\xc8\xc1\xac\xe6v\\fe\xad\x9a\x00hs\xcdJ\xec\x9d\x08\xe0\xef5\xf9\xc6MV\xf4\xce\xe9\xcb}k:\xe3\xdd\x0b_\xd4$\xe7a\xb4t&lt;\xea\xba\x0er\xc9\xa3\xea&lt;\xdam\x99\xebm\xba\xd5zE\xc7}\xde\xe7&lt;\xd7_\xc5k\r\xa8\x10\x00R\x01\x8e`kZ\xdf\xa1\xe8V\xe5\xb9pa\xb4\xca\xc69\xa8\xa2\xa2\x813H\xd4\x1dT\x9c\xc9\xb9j-,6\x05\x955\xa05\x8b\xa5\x92%\x1fL\xa9o"5\x1aj!AZW*\x92EeAkK\x8c{.L:\x8e\x1e\'\x11\xea\xcf\x8bt\xcf\\\xcb\x97\xbb\xf0\xdb\x8a\xe5Z_\x1f\xf4#\xd2~z\xddyTkz\xe5\x1b&gt;q\x11\xd7\x96}+\xe8\xb3\x1d\xb3\xcfJ\x9e\x0fS\xec\x8e\r\xdbv\x91&gt;\x91\xe4\xa9\xbc\xfb&gt;Q\x10\xba\xbcF\x02J\x8bkX\xb9\xd92&amp;7![.X%@\x90D\xdfdzN\xd1\x9a\xd9\xb9\x9e!\xd5\x0fr\x8d\xcc\xcfH\xe0[MC\x06\xc3&lt;\x92~\x95\x07&amp;\x92\xe5\xb4\x96\x9f\xaa\x9a\x15\xec\x96\x9cw,\x86\x0c\xe4\xfd\x0c\x9a\x14u\x1c\xd3I\xdey\xae\x01\x9c\xed^\xcf\xcb\xaaE\xb7H\xcd\xe2|\xd9n\x06\x01m"\xdd\x98)\x0c\x90\x9ae1C\x8e\x0fc\xec&lt;\x80\x92=\x99\x89\x1d\x10tb\x80\xb2\xc1\xd3\x17P\xde\xcd\x7fQ\xb5P\xef)\xbbc\t\xb3\xc5\xd4\xc8\xf8{vW=U\x9e\xebN\xebs\xf0\xdfsr\xdf5\xd7\xf0[\xd5\x0c\x02\x0e%\x01\xc2\x8boZ\xef\xed\xa7\x9e\x82\xe5qXz\xc0\x06\xac\x9d2G@\xc4&lt;\n\x94i\xa8:\xd4]\\vTl\xdb\xbe6\xb9ea\x85\x9fLTP\x02\xad\x91\r*V\xb5\x8e\xa4\x98\xd5\\\xd9\xc7E\xe6]R\xb4\xe4\xe9|\xbe\'\x9f\xbd,8\xae\xd5\xdf\xb9\xb9\xa8\xc2\r\x92f\xf5\xbe\xcc;\x17\x19\xa9\xb7\xb3e\xa7\x1e\xd3n\x9f\x18o\x99G\x94\xfb\xb5\xda\xf3\x9e\xd5\xcc\xacl\xa3\xa9\xd15\x9a=\xecxOv\xe5W\xd8\xe9Y\xb5\xec\xf8\x9b\n\xa3\xe6\xeb4\x04N\x87\xbc\xf9\xf7\xae};\xcam)\xa6j:%6\xf9\x1d\xa0\xc0X\xb1Z\x91mj\x9f\x9a$\x85\xd6x\xc6\xaaM\x9dw\x95\xce\xcfI\xf2\xe3\xd9\n\x11\xd4+\x19n&lt;\r\x80\xfa\xd4\x86eI\xa95\x8e\x8b@\x81\xa4\xe9\xdd\xf8n\\\xbaXE\x8e@%\x17\x10\xd4:\x86\xcbV\xd5-c\xa9K\xda6l\xe4\x91\xb2Md5\x91@Hb\x10\x03\x852G\xea\x9bi\x94=R\x86f\nA\x02\xa0\xc8]FX\xea\x06\x86\xd0\x8f&lt;q\x1e\xa4\xfa7*\x1e\x17\x89\xc9\x0b\xbe\xb8\xe7=\xb5}\xcf\xd3\xb8\x99\xb7\xccu\xbc\x16\xaa\x91\x8c\x06\x12\xa0\xd2\x85*\x97\xb3\xa7_\xdb\xacX\xd8\x80\x8f\x00\x1a\x91hi\t \xd0\xa8\x89,ZU~\xad\x96C\xa2\xb7U\x17\xa3)9\xab\x9e=f\x98\xcay\xc5\x08,\x84\xb6\xaa:j\xb4Q^P\xc8\xb9\xcf\xa6\xc7.\x96\xef\xe7\xf4\xfeo\x17\xc9\x1e\xae:\xce\xa7|\xe2\xe5\xe1\xdd'... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg timestamp="20230530 16:33:51.273" level="INFO">POST Response : url=http://api-uat-internal.hatthabank.com/account-service/api/v1.0/account-opening/kyc/check 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 30 May 2023 09:33:51 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Xss-Protection': '1 ; mode=block', 'Strict-Transport-Security': 'max-age=3153600; includeSubDomains', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'", 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'master-only', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Access-Control-Max-Age': '3628800', 'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS, POST, PUT'} 
+ body={"code":"S0001","title":null,"message":"Success.","traceId":"f1dbc9a5282cb01b","data":{"gender":"Male","pob":"តាកែវ","dob":"15 Apr 1998","nationality":"Cambodian","address":null,"verify_id":"eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODU0MzkyMzEsImV4cCI6MTY4NTQzOTUzMSwic2VydmljZXMiOlsiYWNjb3VudC1zZXJ2aWNlIl0sImNpZiI6Ikk5YWc2UGFnTDhlMFphYjMiLCJkZXZpY2VfaWQiOiIwNjQ4NDYxNDQiLCJyZXF1ZXN0X2lkIjoiSTlhZzZQYWdMOGUwWmFiMyJ9.Ruckk2fnX1dD7Pvu38GR5vn6NMVD9P0dvsw9YGZVsFoBx_MSMSvgYQlOPzHEvQRSipSQ3ncfubV-hP2su_kfdQ","country_code":null,"phone_number":null,"first_name":"ROTHY","last_name":"YORN","first_name_kh":"រ័ត្នធី","last_name_kh":"យ៉ន","national_id":"100909975","expiry_date":"18 Aug 2024","customer_photo_url":"https://api-uat.hatthabank.com:6443/file-management/api/v1.0/file/E-KYC/account-opening-customerFace-1009099751685439231251"}} 
+ </msg>
+<msg timestamp="20230530 16:33:51.274" level="INFO">${Response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230530 16:33:44.400" endtime="20230530 16:33:51.275"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${Response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20230530 16:33:51.277" level="INFO">${Response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230530 16:33:51.276" endtime="20230530 16:33:51.278"/>
+</kw>
+<kw name="check get response body for verify OTP" library="Verify_success">
+<arg>${Response.json()}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${status_code}</var>
+<arg>${resp}</arg>
+<arg>$.code</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230530 16:33:51.308" level="INFO">${status_code} = ['S0001']</msg>
+<status status="PASS" starttime="20230530 16:33:51.283" endtime="20230530 16:33:51.308"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${smg}</var>
+<arg>${resp}</arg>
+<arg>$.message</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230530 16:33:51.324" level="INFO">${smg} = ['Success.']</msg>
+<status status="PASS" starttime="20230530 16:33:51.308" endtime="20230530 16:33:51.325"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${status_code[0]}&quot;==&quot;UP-IN003&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>UP-IN003</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.326" endtime="20230530 16:33:51.326"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>UP-IN003</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.326" endtime="20230530 16:33:51.326"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:51.325" endtime="20230530 16:33:51.327"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;E0001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>E0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.328" endtime="20230530 16:33:51.328"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>E0001</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.328" endtime="20230530 16:33:51.328"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:51.327" endtime="20230530 16:33:51.328"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;EREQID-03&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>EREQID-03</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.329" endtime="20230530 16:33:51.329"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>EREQID-03</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.329" endtime="20230530 16:33:51.330"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:51.329" endtime="20230530 16:33:51.330"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;UP-EP001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>UP-EP001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.330" endtime="20230530 16:33:51.330"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>UP-EP001</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.331" endtime="20230530 16:33:51.331"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:51.330" endtime="20230530 16:33:51.331"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;EREQID-01&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>EREQID-01</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.332" endtime="20230530 16:33:51.332"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>EREQID-01</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.332" endtime="20230530 16:33:51.332"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:51.331" endtime="20230530 16:33:51.332"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;EREQID-02&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>EREQID-02</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.333" endtime="20230530 16:33:51.333"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>EREQID-02</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.333" endtime="20230530 16:33:51.333"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:51.332" endtime="20230530 16:33:51.333"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;EF0001&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>EF0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.334" endtime="20230530 16:33:51.334"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>EF0001</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.334" endtime="20230530 16:33:51.334"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:51.333" endtime="20230530 16:33:51.334"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;HTTP400&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>HTTP400</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.335" endtime="20230530 16:33:51.335"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>HTTP400</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.335" endtime="20230530 16:33:51.335"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:51.334" endtime="20230530 16:33:51.336"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${status_code[0]}&quot;==&quot;EREQID-05&quot;">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>EREQID-05</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.336" endtime="20230530 16:33:51.336"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>EREQID-05</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.336" endtime="20230530 16:33:51.337"/>
+</kw>
+<status status="NOT RUN" starttime="20230530 16:33:51.336" endtime="20230530 16:33:51.337"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${response_status}</var>
+<arg>Should Be Equal As Strings</arg>
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230530 16:33:51.337" endtime="20230530 16:33:51.338"/>
+</kw>
+<msg timestamp="20230530 16:33:51.338" level="INFO">${response_status} = True</msg>
+<status status="PASS" starttime="20230530 16:33:51.337" endtime="20230530 16:33:51.338"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status_code[0]}</arg>
+<arg>S0001</arg>
+<arg>We has found somthing went wrong!!</arg>
+<arg>${smg}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230530 16:33:51.338" endtime="20230530 16:33:51.339"/>
+</kw>
+<status status="PASS" starttime="20230530 16:33:51.337" endtime="20230530 16:33:51.339"/>
+</branch>
+<status status="PASS" starttime="20230530 16:33:51.325" endtime="20230530 16:33:51.339"/>
+</if>
+<kw name="Set Test Message" library="BuiltIn">
+<arg>${smg[0]}</arg>
+<doc>Sets message for the current test case.</doc>
+<msg timestamp="20230530 16:33:51.341" level="INFO">Set test message to:
+Success.</msg>
+<status status="PASS" starttime="20230530 16:33:51.340" endtime="20230530 16:33:51.342"/>
+</kw>
+<status status="PASS" starttime="20230530 16:33:51.280" endtime="20230530 16:33:51.342"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${Response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230530 16:33:51.344" level="INFO">{'code': 'S0001', 'title': None, 'message': 'Success.', 'traceId': 'f1dbc9a5282cb01b', 'data': {'gender': 'Male', 'pob': 'តាកែវ', 'dob': '15 Apr 1998', 'nationality': 'Cambodian', 'address': None, 'verify_id': 'eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODU0MzkyMzEsImV4cCI6MTY4NTQzOTUzMSwic2VydmljZXMiOlsiYWNjb3VudC1zZXJ2aWNlIl0sImNpZiI6Ikk5YWc2UGFnTDhlMFphYjMiLCJkZXZpY2VfaWQiOiIwNjQ4NDYxNDQiLCJyZXF1ZXN0X2lkIjoiSTlhZzZQYWdMOGUwWmFiMyJ9.Ruckk2fnX1dD7Pvu38GR5vn6NMVD9P0dvsw9YGZVsFoBx_MSMSvgYQlOPzHEvQRSipSQ3ncfubV-hP2su_kfdQ', 'country_code': None, 'phone_number': None, 'first_name': 'ROTHY', 'last_name': 'YORN', 'first_name_kh': 'រ័ត្នធី', 'last_name_kh': 'យ៉ន', 'national_id': '100909975', 'expiry_date': '18 Aug 2024', 'customer_photo_url': 'https://api-uat.hatthabank.com:6443/file-management/api/v1.0/file/E-KYC/account-opening-customerFace-1009099751685439231251'}}</msg>
+<status status="PASS" starttime="20230530 16:33:51.342" endtime="20230530 16:33:51.345"/>
+</kw>
+<status status="PASS" starttime="20230530 16:33:44.393" endtime="20230530 16:33:51.345"/>
+</kw>
+<kw name="verify KYC information is correct" library="online_account_opening_keyword">
+<arg>${Response}</arg>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${verify_id}</var>
+<arg>${resp}</arg>
+<arg>$.data.verify_id</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230530 16:33:51.349" level="FAIL">Variable '${resp}' not found. Did you mean:
+    ${Response}</msg>
+<status status="FAIL" starttime="20230530 16:33:51.347" endtime="20230530 16:33:51.351"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${fist_name}</var>
+<arg>${resp}</arg>
+<arg>$.data.first_name</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.351" endtime="20230530 16:33:51.352"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${list_name}</var>
+<arg>${resp}</arg>
+<arg>$.data.last_name</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.352" endtime="20230530 16:33:51.352"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${first_name_kh}</var>
+<arg>${resp}</arg>
+<arg>$.data.first_name_kh</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.352" endtime="20230530 16:33:51.353"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${last_name_kh}</var>
+<arg>${resp}</arg>
+<arg>$.data.last_name_kh</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.353" endtime="20230530 16:33:51.353"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${gender}</var>
+<arg>${resp}</arg>
+<arg>$.data.gender</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.353" endtime="20230530 16:33:51.354"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${pob}</var>
+<arg>${resp}</arg>
+<arg>$.data.pob</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.354" endtime="20230530 16:33:51.354"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${dob}</var>
+<arg>${resp}</arg>
+<arg>$.data.dob</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.354" endtime="20230530 16:33:51.354"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${national_id}</var>
+<arg>${resp}</arg>
+<arg>$.data.national_id</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.354" endtime="20230530 16:33:51.354"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${expiry_date}</var>
+<arg>${resp}</arg>
+<arg>$.data.expiry_date</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.355" endtime="20230530 16:33:51.355"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${nationality}</var>
+<arg>${resp}</arg>
+<arg>$.data.nationality</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.355" endtime="20230530 16:33:51.355"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${customer_photo_url}</var>
+<arg>${resp}</arg>
+<arg>$.data.customer_photo_url</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.355" endtime="20230530 16:33:51.357"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>baseUrl</arg>
+<arg>${baseurl}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.357" endtime="20230530 16:33:51.357"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>x-api-key=${x-api-key}</arg>
+<arg>client_id=${client_id}</arg>
+<arg>client_secret=${client_secret}</arg>
+<arg>device_id=${phone_number}</arg>
+<arg>app_version=${app_version}</arg>
+<arg>language=${language}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.357" endtime="20230530 16:33:51.357"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${json}</var>
+<arg>{</arg>
+<arg>"verify_id": "${verify_id[0]}",</arg>
+<arg>"country_code": "855",</arg>
+<arg>"phone_number": "${phone_number}",</arg>
+<arg>"first_name": "${fist_name[0]}",</arg>
+<arg>"last_name": "${list_name[0]}",</arg>
+<arg>"first_name_kh": "${first_name_kh[0]}",</arg>
+<arg>"last_name_kh": "${last_name_kh[0]}",</arg>
+<arg>"gender": "${gender[0]}",</arg>
+<arg>"pob": "${pob[0]}",</arg>
+<arg>"dob": "${dob[0]}",</arg>
+<arg>"national_id": "${national_id[0]}",</arg>
+<arg>"expiry_date": "${expiry_date[0]}",</arg>
+<arg>"nationality": "${nationality[0]}",</arg>
+<arg>"customer_photo_url":"${customer_photo_url[0]}"</arg>
+<arg>}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.357" endtime="20230530 16:33:51.358"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230530 16:33:51.358" endtime="20230530 16:33:51.358"/>
+</kw>
+<status status="FAIL" starttime="20230530 16:33:51.346" endtime="20230530 16:33:51.358"/>
+</kw>
+<tag>Positive</tag>
+<status status="FAIL" starttime="20230530 16:33:43.087" endtime="20230530 16:33:51.359">Variable '${resp}' not found. Did you mean:
+    ${Response}</status>
+</test>
+<status status="FAIL" starttime="20230530 16:33:42.604" endtime="20230530 16:33:51.362"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" skip="0">Positive</stat>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Online Account Opening">Online Account Opening</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
