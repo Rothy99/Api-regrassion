@@ -2,56 +2,56 @@
 Resource                  ../keywords/online_account_opening_keyword.robot
 
 *** Test Case ***
-Check verify phone number
+Online account opening - Check verify phone number
     [Tags]      Positive
     verify phone number 
-Check Validation otp is corrected
+Online account opening - Check Validation otp is corrected
     [Tags]      Positive
     Check verify OTP    ${verify_id}  ${phone_number}
-Check verify phone number has existing
+Online account opening - Check verify phone number has existing
     [Tags]      Negative
     Verify phone number existing
-Check Validation otp is incorrected
+Online account opening - Check Validation otp is incorrected
     [Tags]      Negative
     Check verify OTP incorrect   ${verify_id}  ${phone_number}
-Check validation incorrect otp type from request body
+Online account opening - Check validation incorrect otp type from request body
     [Tags]      Negative
     Check verify incorrect OTP type     ${verify_id}  ${phone_number}
-Check validation invalid verity id
+Online account opening - Check validation invalid verity id
     [Tags]      Negative
     Check verify invalid verify id     ${verify_id}  ${phone_number}
-Check validation verify id is expired
+Online account opening - heck validation verify id is expired
     [Tags]      Negative
     Check verify verify id is expired
-Check request KYC to CamDX 
+Online account opening - Check request KYC to CamDX 
     [Tags]      Positive
     Check verify KYC     ${verify_id}  ${phone_number}
-Check validation request KYC to CamDX without NID
+Online account opening - Check validation request KYC to CamDX without NID
     [Tags]      Negative
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
     Request to CamDX without NID    ${verify_id}  ${phone_number}
-Check validation request KYC to CamDX without user photo
+Online account opening - Check validation request KYC to CamDX without user photo
     [Tags]      Negative
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
     Request to CamDX without User photo    ${verify_id}  ${phone_number}
-Check validation request KYC to CamDX without user photo and NID
+Online account opening - Check validation request KYC to CamDX without user photo and NID
     [Tags]      Negative
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
     Request to CamDX without User photo and NID    ${verify_id}  ${phone_number}
-Check validation request KYC to CamDX without request body
+Online account opening - Check validation request KYC to CamDX without request body
     [Tags]      Negative
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
     Request to CamDX without request body     ${verify_id}  ${phone_number}
-Check validation request KYC to CamDX verify id expired
+Online account opening - Check validation request KYC to CamDX verify id expired
     [Tags]      Negative
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
     Request to CamDX with verify id expired     ${phone_number}
-Check verify KYC information correct
+Online account opening - Check verify KYC information correct
     [Tags]      Positive   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -69,7 +69,7 @@ Check verify KYC information correct
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC has existing
+Online account opening - Check verify KYC has existing
         [Tags]      Positive   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -88,7 +88,7 @@ Check verify KYC has existing
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC invalid verify id
+Online account opening - Check verify KYC invalid verify id
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -106,7 +106,7 @@ Check verify KYC invalid verify id
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC invalid fist name
+Online account opening - Check verify KYC invalid fist name
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -124,7 +124,7 @@ Check verify KYC invalid fist name
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC invalid last name
+Online account opening - Check verify KYC invalid last name
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -142,7 +142,7 @@ Check verify KYC invalid last name
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC invalid first name kh
+Online account opening - Check verify KYC invalid first name kh
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -160,7 +160,7 @@ Check verify KYC invalid first name kh
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC invalid last name kh
+Online account opening - Check verify KYC invalid last name kh
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -178,7 +178,7 @@ Check verify KYC invalid last name kh
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC invalid gender
+Online account opening - Check verify KYC invalid gender
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -196,7 +196,7 @@ Check verify KYC invalid gender
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC invalid POB
+Online account opening - Check verify KYC invalid POB
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -214,7 +214,7 @@ Check verify KYC invalid POB
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC invalid DOB
+Online account opening - Check verify KYC invalid DOB
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -232,7 +232,7 @@ Check verify KYC invalid DOB
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC invalid national id
+Online account opening - Check verify KYC invalid national id
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -250,7 +250,7 @@ Check verify KYC invalid national id
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC invalid expiry date
+Online account opening - Check verify KYC invalid expiry date
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -268,7 +268,7 @@ Check verify KYC invalid expiry date
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC invalid nationality
+Online account opening - Check verify KYC invalid nationality
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -286,7 +286,7 @@ Check verify KYC invalid nationality
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC invalid customer photo url
+Online account opening - Check verify KYC invalid customer photo url
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -304,7 +304,7 @@ Check verify KYC invalid customer photo url
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check verify KYC invalid all information
+Online account opening - Check verify KYC invalid all information
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -322,7 +322,7 @@ Check verify KYC invalid all information
     ...     ${expiry_date}
     ...     ${nationality}
     ...     ${customer_photo_url}
-Check create acccount with currency USD and KHR
+Online account opening - Check create acccount with currency USD and KHR
     [Tags]      Positive   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
@@ -379,7 +379,7 @@ Check create acccount with currency USD and KHR
 #     ...     ${nationality}
 #     ...     ${customer_photo_url}
 #     Check create account with currency KHR    ${verify_id_kyc}  ${phone_number_kyc}
-Check create acccount with expired verify id
+Online account opening - Check create acccount with expired verify id
     [Tags]      Negative   
     verify phone number 
     Check verify OTP    ${verify_id}  ${phone_number}
